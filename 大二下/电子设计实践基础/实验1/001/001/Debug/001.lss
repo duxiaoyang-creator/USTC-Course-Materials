@@ -1,0 +1,227 @@
+
+001.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000d4  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000128  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000128  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000158  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000194  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000623  00000000  00000000  000001b4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000545  00000000  00000000  000007d7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000002d9  00000000  00000000  00000d1c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00000ff8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002e7  00000000  00000000  0000101c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000211  00000000  00000000  00001303  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  00001514  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
+   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
+   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
+   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
+   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
+   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
+   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
+  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
+  12:	11 c0       	rjmp	.+34     	; 0x36 <__bad_interrupt>
+  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
+  16:	0f c0       	rjmp	.+30     	; 0x36 <__bad_interrupt>
+  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
+  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
+  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
+  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
+  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
+  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
+  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+  32:	02 d0       	rcall	.+4      	; 0x38 <main>
+  34:	4d c0       	rjmp	.+154    	; 0xd0 <_exit>
+
+00000036 <__bad_interrupt>:
+  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+
+00000038 <main>:
+#define F_CPU 1000000UL
+#include <util/delay.h>
+
+int main(void)
+{int i,j;
+	DDRC |= (1<<DDRC2)|(1<<DDRC1)|(1<<DDRC0);
+  38:	84 b3       	in	r24, 0x14	; 20
+  3a:	87 60       	ori	r24, 0x07	; 7
+  3c:	84 bb       	out	0x14, r24	; 20
+	while (1)
+	{ PORTC = ~(1<<PORTC2);//only red on
+  3e:	fb ef       	ldi	r31, 0xFB	; 251
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		PORTC = ~(1<<PORTC1);//only green on
+  40:	ed ef       	ldi	r30, 0xFD	; 253
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		PORTC = ~(1<<PORTC0);//only blue on
+  42:	7e ef       	ldi	r23, 0xFE	; 254
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		// 5. Æ·ºì (ºì+À¶)£¬PB3 ºÍ PB1 ÁÁ£¬PB2 Ãð
+		PORTC = (1<<PORTC3)|(1<<PORTC1);
+  44:	6a e0       	ldi	r22, 0x0A	; 10
+		_delay_ms(500);  // ÑÓÊ±500ms
+
+		// 6. ÇàÉ« (ÂÌ+À¶)£¬PB2 ºÍ PB1 ÁÁ£¬PB3 Ãð
+		PORTC = (1<<PORTC2)|(1<<PORTC1);
+  46:	56 e0       	ldi	r21, 0x06	; 6
+		_delay_ms(500);  // ÑÓÊ±500ms
+
+		// 7. °×É« (ºì+ÂÌ+À¶)£¬PB3¡¢PB2 ºÍ PB1 ¶¼ÁÁ
+		PORTC = (1 <<PORTC3)|(1<<PORTC2)|(1<<PORTC1);
+  48:	4e e0       	ldi	r20, 0x0E	; 14
+
+int main(void)
+{int i,j;
+	DDRC |= (1<<DDRC2)|(1<<DDRC1)|(1<<DDRC0);
+	while (1)
+	{ PORTC = ~(1<<PORTC2);//only red on
+  4a:	f5 bb       	out	0x15, r31	; 21
+  4c:	24 e6       	ldi	r18, 0x64	; 100
+  4e:	30 e0       	ldi	r19, 0x00	; 0
+  50:	05 c0       	rjmp	.+10     	; 0x5c <__SREG__+0x1d>
+  52:	01 97       	sbiw	r24, 0x01	; 1
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+  54:	f1 f7       	brne	.-4      	; 0x52 <__SREG__+0x13>
+  56:	21 50       	subi	r18, 0x01	; 1
+  58:	31 09       	sbc	r19, r1
+  5a:	19 f0       	breq	.+6      	; 0x62 <__SREG__+0x23>
+#include <avr/io.h>
+#define F_CPU 1000000UL
+#include <util/delay.h>
+
+int main(void)
+{int i,j;
+  5c:	88 ee       	ldi	r24, 0xE8	; 232
+  5e:	93 e0       	ldi	r25, 0x03	; 3
+  60:	f8 cf       	rjmp	.-16     	; 0x52 <__SREG__+0x13>
+	DDRC |= (1<<DDRC2)|(1<<DDRC1)|(1<<DDRC0);
+	while (1)
+	{ PORTC = ~(1<<PORTC2);//only red on
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		PORTC = ~(1<<PORTC1);//only green on
+  62:	e5 bb       	out	0x15, r30	; 21
+  64:	24 e6       	ldi	r18, 0x64	; 100
+  66:	30 e0       	ldi	r19, 0x00	; 0
+  68:	05 c0       	rjmp	.+10     	; 0x74 <__SREG__+0x35>
+  6a:	01 97       	sbiw	r24, 0x01	; 1
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+  6c:	f1 f7       	brne	.-4      	; 0x6a <__SREG__+0x2b>
+  6e:	21 50       	subi	r18, 0x01	; 1
+  70:	31 09       	sbc	r19, r1
+  72:	19 f0       	breq	.+6      	; 0x7a <__SREG__+0x3b>
+
+int main(void)
+{int i,j;
+	DDRC |= (1<<DDRC2)|(1<<DDRC1)|(1<<DDRC0);
+	while (1)
+	{ PORTC = ~(1<<PORTC2);//only red on
+  74:	88 ee       	ldi	r24, 0xE8	; 232
+  76:	93 e0       	ldi	r25, 0x03	; 3
+  78:	f8 cf       	rjmp	.-16     	; 0x6a <__SREG__+0x2b>
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		PORTC = ~(1<<PORTC1);//only green on
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		PORTC = ~(1<<PORTC0);//only blue on
+  7a:	75 bb       	out	0x15, r23	; 21
+  7c:	24 e6       	ldi	r18, 0x64	; 100
+  7e:	30 e0       	ldi	r19, 0x00	; 0
+  80:	05 c0       	rjmp	.+10     	; 0x8c <__SREG__+0x4d>
+  82:	01 97       	sbiw	r24, 0x01	; 1
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+  84:	f1 f7       	brne	.-4      	; 0x82 <__SREG__+0x43>
+  86:	21 50       	subi	r18, 0x01	; 1
+  88:	31 09       	sbc	r19, r1
+  8a:	19 f0       	breq	.+6      	; 0x92 <__SREG__+0x53>
+{int i,j;
+	DDRC |= (1<<DDRC2)|(1<<DDRC1)|(1<<DDRC0);
+	while (1)
+	{ PORTC = ~(1<<PORTC2);//only red on
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		PORTC = ~(1<<PORTC1);//only green on
+  8c:	88 ee       	ldi	r24, 0xE8	; 232
+  8e:	93 e0       	ldi	r25, 0x03	; 3
+  90:	f8 cf       	rjmp	.-16     	; 0x82 <__SREG__+0x43>
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		PORTC = ~(1<<PORTC0);//only blue on
+		for(i=0;i<100;i++) for(j=0;j<1000;j++);
+		// 5. Æ·ºì (ºì+À¶)£¬PB3 ºÍ PB1 ÁÁ£¬PB2 Ãð
+		PORTC = (1<<PORTC3)|(1<<PORTC1);
+  92:	65 bb       	out	0x15, r22	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  94:	2f e9       	ldi	r18, 0x9F	; 159
+  96:	86 e8       	ldi	r24, 0x86	; 134
+  98:	91 e0       	ldi	r25, 0x01	; 1
+  9a:	21 50       	subi	r18, 0x01	; 1
+  9c:	80 40       	sbci	r24, 0x00	; 0
+  9e:	90 40       	sbci	r25, 0x00	; 0
+  a0:	e1 f7       	brne	.-8      	; 0x9a <__SREG__+0x5b>
+  a2:	00 c0       	rjmp	.+0      	; 0xa4 <__SREG__+0x65>
+  a4:	00 00       	nop
+		_delay_ms(500);  // ÑÓÊ±500ms
+
+		// 6. ÇàÉ« (ÂÌ+À¶)£¬PB2 ºÍ PB1 ÁÁ£¬PB3 Ãð
+		PORTC = (1<<PORTC2)|(1<<PORTC1);
+  a6:	55 bb       	out	0x15, r21	; 21
+  a8:	2f e9       	ldi	r18, 0x9F	; 159
+  aa:	86 e8       	ldi	r24, 0x86	; 134
+  ac:	91 e0       	ldi	r25, 0x01	; 1
+  ae:	21 50       	subi	r18, 0x01	; 1
+  b0:	80 40       	sbci	r24, 0x00	; 0
+  b2:	90 40       	sbci	r25, 0x00	; 0
+  b4:	e1 f7       	brne	.-8      	; 0xae <__SREG__+0x6f>
+  b6:	00 c0       	rjmp	.+0      	; 0xb8 <__SREG__+0x79>
+  b8:	00 00       	nop
+		_delay_ms(500);  // ÑÓÊ±500ms
+
+		// 7. °×É« (ºì+ÂÌ+À¶)£¬PB3¡¢PB2 ºÍ PB1 ¶¼ÁÁ
+		PORTC = (1 <<PORTC3)|(1<<PORTC2)|(1<<PORTC1);
+  ba:	45 bb       	out	0x15, r20	; 21
+  bc:	2f e9       	ldi	r18, 0x9F	; 159
+  be:	86 e8       	ldi	r24, 0x86	; 134
+  c0:	91 e0       	ldi	r25, 0x01	; 1
+  c2:	21 50       	subi	r18, 0x01	; 1
+  c4:	80 40       	sbci	r24, 0x00	; 0
+  c6:	90 40       	sbci	r25, 0x00	; 0
+  c8:	e1 f7       	brne	.-8      	; 0xc2 <__SREG__+0x83>
+  ca:	00 c0       	rjmp	.+0      	; 0xcc <__SREG__+0x8d>
+  cc:	00 00       	nop
+  ce:	bd cf       	rjmp	.-134    	; 0x4a <__SREG__+0xb>
+
+000000d0 <_exit>:
+  d0:	f8 94       	cli
+
+000000d2 <__stop_program>:
+  d2:	ff cf       	rjmp	.-2      	; 0xd2 <__stop_program>

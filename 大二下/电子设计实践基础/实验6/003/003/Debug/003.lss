@@ -1,0 +1,300 @@
+
+003.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001c6  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000004  00800060  000001c6  0000023a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000023e  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000270  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000030  00000000  00000000  000002ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000656  00000000  00000000  000002dc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000573  00000000  00000000  00000932  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000027e  00000000  00000000  00000ea5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000070  00000000  00000000  00001124  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000306  00000000  00000000  00001194  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000015a  00000000  00000000  0000149a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000020  00000000  00000000  000015f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	25 c0       	rjmp	.+74     	; 0x4e <__vector_1>
+   4:	3b c0       	rjmp	.+118    	; 0x7c <__vector_2>
+   6:	22 c0       	rjmp	.+68     	; 0x4c <__bad_interrupt>
+   8:	21 c0       	rjmp	.+66     	; 0x4c <__bad_interrupt>
+   a:	20 c0       	rjmp	.+64     	; 0x4c <__bad_interrupt>
+   c:	1f c0       	rjmp	.+62     	; 0x4c <__bad_interrupt>
+   e:	1e c0       	rjmp	.+60     	; 0x4c <__bad_interrupt>
+  10:	1d c0       	rjmp	.+58     	; 0x4c <__bad_interrupt>
+  12:	1c c0       	rjmp	.+56     	; 0x4c <__bad_interrupt>
+  14:	1b c0       	rjmp	.+54     	; 0x4c <__bad_interrupt>
+  16:	1a c0       	rjmp	.+52     	; 0x4c <__bad_interrupt>
+  18:	19 c0       	rjmp	.+50     	; 0x4c <__bad_interrupt>
+  1a:	18 c0       	rjmp	.+48     	; 0x4c <__bad_interrupt>
+  1c:	17 c0       	rjmp	.+46     	; 0x4c <__bad_interrupt>
+  1e:	16 c0       	rjmp	.+44     	; 0x4c <__bad_interrupt>
+  20:	15 c0       	rjmp	.+42     	; 0x4c <__bad_interrupt>
+  22:	14 c0       	rjmp	.+40     	; 0x4c <__bad_interrupt>
+  24:	13 c0       	rjmp	.+38     	; 0x4c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e6 ec       	ldi	r30, 0xC6	; 198
+  3a:	f1 e0       	ldi	r31, 0x01	; 1
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a4 36       	cpi	r26, 0x64	; 100
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+  48:	3e d0       	rcall	.+124    	; 0xc6 <main>
+  4a:	bb c0       	rjmp	.+374    	; 0x1c2 <_exit>
+
+0000004c <__bad_interrupt>:
+  4c:	d9 cf       	rjmp	.-78     	; 0x0 <__vectors>
+
+0000004e <__vector_1>:
+#include <util/delay.h>
+#include <avr/interrupt.h>
+unsigned char duty=50; //占空比，百分比
+unsigned int freq=30; //频率：30~3000Hz范围可调( 实测29.8~2.7K)
+ISR(INT0_vect)
+{ if(duty > 90)//百分比
+  4e:	1f 92       	push	r1
+  50:	0f 92       	push	r0
+  52:	0f b6       	in	r0, 0x3f	; 63
+  54:	0f 92       	push	r0
+  56:	11 24       	eor	r1, r1
+  58:	8f 93       	push	r24
+  5a:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <duty>
+  5e:	8b 35       	cpi	r24, 0x5B	; 91
+  60:	20 f0       	brcs	.+8      	; 0x6a <__vector_1+0x1c>
+	duty = 10;
+  62:	8a e0       	ldi	r24, 0x0A	; 10
+  64:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <duty>
+  68:	03 c0       	rjmp	.+6      	; 0x70 <__vector_1+0x22>
+else duty +=10; }
+  6a:	86 5f       	subi	r24, 0xF6	; 246
+  6c:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <duty>
+  70:	8f 91       	pop	r24
+  72:	0f 90       	pop	r0
+  74:	0f be       	out	0x3f, r0	; 63
+  76:	0f 90       	pop	r0
+  78:	1f 90       	pop	r1
+  7a:	18 95       	reti
+
+0000007c <__vector_2>:
+ISR(INT1_vect)
+{ if(freq >2000) freq = 30;
+  7c:	1f 92       	push	r1
+  7e:	0f 92       	push	r0
+  80:	0f b6       	in	r0, 0x3f	; 63
+  82:	0f 92       	push	r0
+  84:	11 24       	eor	r1, r1
+  86:	2f 93       	push	r18
+  88:	8f 93       	push	r24
+  8a:	9f 93       	push	r25
+  8c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  90:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  94:	81 3d       	cpi	r24, 0xD1	; 209
+  96:	27 e0       	ldi	r18, 0x07	; 7
+  98:	92 07       	cpc	r25, r18
+  9a:	38 f0       	brcs	.+14     	; 0xaa <__vector_2+0x2e>
+  9c:	8e e1       	ldi	r24, 0x1E	; 30
+  9e:	90 e0       	ldi	r25, 0x00	; 0
+  a0:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  a4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+  a8:	06 c0       	rjmp	.+12     	; 0xb6 <__vector_2+0x3a>
+else freq +=100; }
+  aa:	8c 59       	subi	r24, 0x9C	; 156
+  ac:	9f 4f       	sbci	r25, 0xFF	; 255
+  ae:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  b2:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+  b6:	9f 91       	pop	r25
+  b8:	8f 91       	pop	r24
+  ba:	2f 91       	pop	r18
+  bc:	0f 90       	pop	r0
+  be:	0f be       	out	0x3f, r0	; 63
+  c0:	0f 90       	pop	r0
+  c2:	1f 90       	pop	r1
+  c4:	18 95       	reti
+
+000000c6 <main>:
+int main(void) {
+	DDRD &=~((1<<DDRD2) |(1<<DDRD3)); //分别调整占空比和频率
+  c6:	81 b3       	in	r24, 0x11	; 17
+  c8:	83 7f       	andi	r24, 0xF3	; 243
+  ca:	81 bb       	out	0x11, r24	; 17
+	PORTD |=(1<<PORTD2)|(1<<PORTD3); //开启内部上拉电阻，默认高电平
+  cc:	82 b3       	in	r24, 0x12	; 18
+  ce:	8c 60       	ori	r24, 0x0C	; 12
+  d0:	82 bb       	out	0x12, r24	; 18
+	DDRB |=(1<<DDRB1); //PB1控制蜂鸣器的IO
+  d2:	b9 9a       	sbi	0x17, 1	; 23
+	MCUCR |=(1<<ISC01)|(1<<ISC11); //INT0和INT1下降沿触发
+  d4:	85 b7       	in	r24, 0x35	; 53
+  d6:	8a 60       	ori	r24, 0x0A	; 10
+  d8:	85 bf       	out	0x35, r24	; 53
+	GICR |=(1<<INT0)|(1<<INT1); //开中断
+  da:	8b b7       	in	r24, 0x3b	; 59
+  dc:	80 6c       	ori	r24, 0xC0	; 192
+  de:	8b bf       	out	0x3b, r24	; 59
+	sei(); //全局中断开
+  e0:	78 94       	sei
+	unsigned int high,low,i;
+	while (1) {
+		high = F_CPU/14/freq/100*duty; //换算为高电平的周期数
+  e2:	0f 2e       	mov	r0, r31
+  e4:	f4 e2       	ldi	r31, 0x24	; 36
+  e6:	8f 2e       	mov	r8, r31
+  e8:	f8 eb       	ldi	r31, 0xB8	; 184
+  ea:	9f 2e       	mov	r9, r31
+  ec:	f8 e0       	ldi	r31, 0x08	; 8
+  ee:	af 2e       	mov	r10, r31
+  f0:	b1 2c       	mov	r11, r1
+  f2:	f0 2d       	mov	r31, r0
+  f4:	0f 2e       	mov	r0, r31
+  f6:	f4 e6       	ldi	r31, 0x64	; 100
+  f8:	cf 2e       	mov	r12, r31
+  fa:	d1 2c       	mov	r13, r1
+  fc:	e1 2c       	mov	r14, r1
+  fe:	f1 2c       	mov	r15, r1
+ 100:	f0 2d       	mov	r31, r0
+ 102:	20 91 60 00 	lds	r18, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 106:	30 91 61 00 	lds	r19, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 10a:	40 e0       	ldi	r20, 0x00	; 0
+ 10c:	50 e0       	ldi	r21, 0x00	; 0
+ 10e:	c5 01       	movw	r24, r10
+ 110:	b4 01       	movw	r22, r8
+ 112:	35 d0       	rcall	.+106    	; 0x17e <__udivmodsi4>
+ 114:	29 01       	movw	r4, r18
+ 116:	3a 01       	movw	r6, r20
+ 118:	ca 01       	movw	r24, r20
+ 11a:	b9 01       	movw	r22, r18
+ 11c:	a7 01       	movw	r20, r14
+ 11e:	96 01       	movw	r18, r12
+ 120:	2e d0       	rcall	.+92     	; 0x17e <__udivmodsi4>
+ 122:	89 01       	movw	r16, r18
+ 124:	9a 01       	movw	r18, r20
+ 126:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <duty>
+ 12a:	90 e0       	ldi	r25, 0x00	; 0
+ 12c:	80 9f       	mul	r24, r16
+ 12e:	a0 01       	movw	r20, r0
+ 130:	81 9f       	mul	r24, r17
+ 132:	50 0d       	add	r21, r0
+ 134:	90 9f       	mul	r25, r16
+ 136:	50 0d       	add	r21, r0
+ 138:	11 24       	eor	r1, r1
+		low = F_CPU/14/freq - high - 160; //换算为低电平的周期数
+ 13a:	20 ea       	ldi	r18, 0xA0	; 160
+ 13c:	42 1a       	sub	r4, r18
+ 13e:	51 08       	sbc	r5, r1
+ 140:	44 1a       	sub	r4, r20
+ 142:	55 0a       	sbc	r5, r21
+		PORTB |=(1<<PORTB1);for(i=0;i<high;i++) _delay_us(1); //高电平持续
+ 144:	c1 9a       	sbi	0x18, 1	; 24
+ 146:	41 15       	cp	r20, r1
+ 148:	51 05       	cpc	r21, r1
+ 14a:	51 f0       	breq	.+20     	; 0x160 <main+0x9a>
+ 14c:	80 e0       	ldi	r24, 0x00	; 0
+ 14e:	90 e0       	ldi	r25, 0x00	; 0
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 150:	22 e0       	ldi	r18, 0x02	; 2
+ 152:	2a 95       	dec	r18
+ 154:	f1 f7       	brne	.-4      	; 0x152 <main+0x8c>
+ 156:	00 c0       	rjmp	.+0      	; 0x158 <main+0x92>
+ 158:	01 96       	adiw	r24, 0x01	; 1
+ 15a:	48 17       	cp	r20, r24
+ 15c:	59 07       	cpc	r21, r25
+ 15e:	c1 f7       	brne	.-16     	; 0x150 <main+0x8a>
+		PORTB &=~(1<<PORTB1);for(i=0;i<low;i++) _delay_us(1); //低电平持续
+ 160:	c1 98       	cbi	0x18, 1	; 24
+ 162:	41 14       	cp	r4, r1
+ 164:	51 04       	cpc	r5, r1
+ 166:	69 f2       	breq	.-102    	; 0x102 <main+0x3c>
+ 168:	80 e0       	ldi	r24, 0x00	; 0
+ 16a:	90 e0       	ldi	r25, 0x00	; 0
+ 16c:	22 e0       	ldi	r18, 0x02	; 2
+ 16e:	2a 95       	dec	r18
+ 170:	f1 f7       	brne	.-4      	; 0x16e <main+0xa8>
+ 172:	00 c0       	rjmp	.+0      	; 0x174 <main+0xae>
+ 174:	01 96       	adiw	r24, 0x01	; 1
+ 176:	48 16       	cp	r4, r24
+ 178:	59 06       	cpc	r5, r25
+ 17a:	c1 f7       	brne	.-16     	; 0x16c <main+0xa6>
+ 17c:	c2 cf       	rjmp	.-124    	; 0x102 <main+0x3c>
+
+0000017e <__udivmodsi4>:
+ 17e:	a1 e2       	ldi	r26, 0x21	; 33
+ 180:	1a 2e       	mov	r1, r26
+ 182:	aa 1b       	sub	r26, r26
+ 184:	bb 1b       	sub	r27, r27
+ 186:	fd 01       	movw	r30, r26
+ 188:	0d c0       	rjmp	.+26     	; 0x1a4 <__udivmodsi4_ep>
+
+0000018a <__udivmodsi4_loop>:
+ 18a:	aa 1f       	adc	r26, r26
+ 18c:	bb 1f       	adc	r27, r27
+ 18e:	ee 1f       	adc	r30, r30
+ 190:	ff 1f       	adc	r31, r31
+ 192:	a2 17       	cp	r26, r18
+ 194:	b3 07       	cpc	r27, r19
+ 196:	e4 07       	cpc	r30, r20
+ 198:	f5 07       	cpc	r31, r21
+ 19a:	20 f0       	brcs	.+8      	; 0x1a4 <__udivmodsi4_ep>
+ 19c:	a2 1b       	sub	r26, r18
+ 19e:	b3 0b       	sbc	r27, r19
+ 1a0:	e4 0b       	sbc	r30, r20
+ 1a2:	f5 0b       	sbc	r31, r21
+
+000001a4 <__udivmodsi4_ep>:
+ 1a4:	66 1f       	adc	r22, r22
+ 1a6:	77 1f       	adc	r23, r23
+ 1a8:	88 1f       	adc	r24, r24
+ 1aa:	99 1f       	adc	r25, r25
+ 1ac:	1a 94       	dec	r1
+ 1ae:	69 f7       	brne	.-38     	; 0x18a <__udivmodsi4_loop>
+ 1b0:	60 95       	com	r22
+ 1b2:	70 95       	com	r23
+ 1b4:	80 95       	com	r24
+ 1b6:	90 95       	com	r25
+ 1b8:	9b 01       	movw	r18, r22
+ 1ba:	ac 01       	movw	r20, r24
+ 1bc:	bd 01       	movw	r22, r26
+ 1be:	cf 01       	movw	r24, r30
+ 1c0:	08 95       	ret
+
+000001c2 <_exit>:
+ 1c2:	f8 94       	cli
+
+000001c4 <__stop_program>:
+ 1c4:	ff cf       	rjmp	.-2      	; 0x1c4 <__stop_program>

@@ -1,0 +1,97 @@
+
+002.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000005c  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000000b0  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000000b0  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000000e0  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  0000011c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000051f  00000000  00000000  0000013c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000004a4  00000000  00000000  0000065b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000001c2  00000000  00000000  00000aff  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00000cc4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002a5  00000000  00000000  00000ce8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000010  00000000  00000000  00000f8d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
+   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
+   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
+   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
+   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
+   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
+   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
+  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
+  12:	11 c0       	rjmp	.+34     	; 0x36 <__bad_interrupt>
+  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
+  16:	0f c0       	rjmp	.+30     	; 0x36 <__bad_interrupt>
+  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
+  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
+  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
+  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
+  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
+  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
+  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+  32:	02 d0       	rcall	.+4      	; 0x38 <main>
+  34:	11 c0       	rjmp	.+34     	; 0x58 <_exit>
+
+00000036 <__bad_interrupt>:
+  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+
+00000038 <main>:
+ */ 
+
+#include <avr/io.h>
+int main(void)
+{
+	DDRB |=(1<<DDRB1);//PB1(OC1A)为输出
+  38:	b9 9a       	sbi	0x17, 1	; 23
+	ICR1 =2048;//设置TOP值
+  3a:	80 e0       	ldi	r24, 0x00	; 0
+  3c:	98 e0       	ldi	r25, 0x08	; 8
+  3e:	97 bd       	out	0x27, r25	; 39
+  40:	86 bd       	out	0x26, r24	; 38
+	OCR1A = 1024;//设置A路比较值
+  42:	80 e0       	ldi	r24, 0x00	; 0
+  44:	94 e0       	ldi	r25, 0x04	; 4
+  46:	9b bd       	out	0x2b, r25	; 43
+  48:	8a bd       	out	0x2a, r24	; 42
+	TCCR1A |= (1<<COM1A1);//设置输出比较管脚切换方式等
+  4a:	8f b5       	in	r24, 0x2f	; 47
+  4c:	80 68       	ori	r24, 0x80	; 128
+  4e:	8f bd       	out	0x2f, r24	; 47
+	TCCR1B |= (1<<WGM13)|(1<<CS12);//设置PWM模式为8，时钟256分频
+  50:	8e b5       	in	r24, 0x2e	; 46
+  52:	84 61       	ori	r24, 0x14	; 20
+  54:	8e bd       	out	0x2e, r24	; 46
+  56:	ff cf       	rjmp	.-2      	; 0x56 <__SREG__+0x17>
+
+00000058 <_exit>:
+  58:	f8 94       	cli
+
+0000005a <__stop_program>:
+  5a:	ff cf       	rjmp	.-2      	; 0x5a <__stop_program>

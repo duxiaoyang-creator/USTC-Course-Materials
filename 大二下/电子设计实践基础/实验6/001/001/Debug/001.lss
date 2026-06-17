@@ -1,0 +1,610 @@
+
+001.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000038e  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000001a  00800060  0000038e  00000422  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000002  0080007a  0080007a  0000043c  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000043c  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000046c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000b8  00000000  00000000  000004a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000e8d  00000000  00000000  00000560  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000736  00000000  00000000  000013ed  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000066f  00000000  00000000  00001b23  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000001d8  00000000  00000000  00002194  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000454  00000000  00000000  0000236c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000776  00000000  00000000  000027c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000a8  00000000  00000000  00002f36  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	1c c0       	rjmp	.+56     	; 0x3a <__ctors_end>
+   2:	36 c0       	rjmp	.+108    	; 0x70 <__bad_interrupt>
+   4:	35 c0       	rjmp	.+106    	; 0x70 <__bad_interrupt>
+   6:	34 c0       	rjmp	.+104    	; 0x70 <__bad_interrupt>
+   8:	33 c0       	rjmp	.+102    	; 0x70 <__bad_interrupt>
+   a:	32 c0       	rjmp	.+100    	; 0x70 <__bad_interrupt>
+   c:	31 c0       	rjmp	.+98     	; 0x70 <__bad_interrupt>
+   e:	30 c0       	rjmp	.+96     	; 0x70 <__bad_interrupt>
+  10:	2f c0       	rjmp	.+94     	; 0x70 <__bad_interrupt>
+  12:	8f c1       	rjmp	.+798    	; 0x332 <__vector_9>
+  14:	2d c0       	rjmp	.+90     	; 0x70 <__bad_interrupt>
+  16:	2c c0       	rjmp	.+88     	; 0x70 <__bad_interrupt>
+  18:	2b c0       	rjmp	.+86     	; 0x70 <__bad_interrupt>
+  1a:	2a c0       	rjmp	.+84     	; 0x70 <__bad_interrupt>
+  1c:	29 c0       	rjmp	.+82     	; 0x70 <__bad_interrupt>
+  1e:	28 c0       	rjmp	.+80     	; 0x70 <__bad_interrupt>
+  20:	27 c0       	rjmp	.+78     	; 0x70 <__bad_interrupt>
+  22:	26 c0       	rjmp	.+76     	; 0x70 <__bad_interrupt>
+  24:	25 c0       	rjmp	.+74     	; 0x70 <__bad_interrupt>
+  26:	44 c0       	rjmp	.+136    	; 0xb0 <Rgb_show+0x1c>
+  28:	49 c0       	rjmp	.+146    	; 0xbc <Rgb_show+0x28>
+  2a:	44 c0       	rjmp	.+136    	; 0xb4 <Rgb_show+0x20>
+  2c:	49 c0       	rjmp	.+146    	; 0xc0 <Rgb_show+0x2c>
+  2e:	44 c0       	rjmp	.+136    	; 0xb8 <Rgb_show+0x24>
+  30:	49 c0       	rjmp	.+146    	; 0xc4 <Rgb_show+0x30>
+  32:	4a c0       	rjmp	.+148    	; 0xc8 <Rgb_show+0x34>
+  34:	4b c0       	rjmp	.+150    	; 0xcc <Rgb_show+0x38>
+  36:	4c c0       	rjmp	.+152    	; 0xd0 <Rgb_show+0x3c>
+  38:	4d c0       	rjmp	.+154    	; 0xd4 <Rgb_show+0x40>
+
+0000003a <__ctors_end>:
+  3a:	11 24       	eor	r1, r1
+  3c:	1f be       	out	0x3f, r1	; 63
+  3e:	cf e5       	ldi	r28, 0x5F	; 95
+  40:	d4 e0       	ldi	r29, 0x04	; 4
+  42:	de bf       	out	0x3e, r29	; 62
+  44:	cd bf       	out	0x3d, r28	; 61
+
+00000046 <__do_copy_data>:
+  46:	10 e0       	ldi	r17, 0x00	; 0
+  48:	a0 e6       	ldi	r26, 0x60	; 96
+  4a:	b0 e0       	ldi	r27, 0x00	; 0
+  4c:	ee e8       	ldi	r30, 0x8E	; 142
+  4e:	f3 e0       	ldi	r31, 0x03	; 3
+  50:	02 c0       	rjmp	.+4      	; 0x56 <__do_copy_data+0x10>
+  52:	05 90       	lpm	r0, Z+
+  54:	0d 92       	st	X+, r0
+  56:	aa 37       	cpi	r26, 0x7A	; 122
+  58:	b1 07       	cpc	r27, r17
+  5a:	d9 f7       	brne	.-10     	; 0x52 <__do_copy_data+0xc>
+
+0000005c <__do_clear_bss>:
+  5c:	20 e0       	ldi	r18, 0x00	; 0
+  5e:	aa e7       	ldi	r26, 0x7A	; 122
+  60:	b0 e0       	ldi	r27, 0x00	; 0
+  62:	01 c0       	rjmp	.+2      	; 0x66 <.do_clear_bss_start>
+
+00000064 <.do_clear_bss_loop>:
+  64:	1d 92       	st	X+, r1
+
+00000066 <.do_clear_bss_start>:
+  66:	ac 37       	cpi	r26, 0x7C	; 124
+  68:	b2 07       	cpc	r27, r18
+  6a:	e1 f7       	brne	.-8      	; 0x64 <.do_clear_bss_loop>
+  6c:	39 d1       	rcall	.+626    	; 0x2e0 <main>
+  6e:	8d c1       	rjmp	.+794    	; 0x38a <_exit>
+
+00000070 <__bad_interrupt>:
+  70:	c7 cf       	rjmp	.-114    	; 0x0 <__vectors>
+
+00000072 <tp_task>:
+
+void LCD_Write_Char(unsigned char row,unsigned char col,char c_data)//在指定位置显示
+{ 
+    LCD_Set_Cursor_Location(row,col);
+    LCD_8Bit_Write(c_data,1);
+}
+  72:	b8 98       	cbi	0x17, 0	; 23
+  74:	90 91 7a 00 	lds	r25, 0x007A	; 0x80007a <__data_end>
+  78:	86 b3       	in	r24, 0x16	; 22
+  7a:	81 70       	andi	r24, 0x01	; 1
+  7c:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__data_end>
+  80:	91 11       	cpse	r25, r1
+  82:	07 c0       	rjmp	.+14     	; 0x92 <tp_task+0x20>
+  84:	81 30       	cpi	r24, 0x01	; 1
+  86:	29 f4       	brne	.+10     	; 0x92 <tp_task+0x20>
+  88:	80 91 7b 00 	lds	r24, 0x007B	; 0x80007b <tp_cnt>
+  8c:	8f 5f       	subi	r24, 0xFF	; 255
+  8e:	80 93 7b 00 	sts	0x007B, r24	; 0x80007b <tp_cnt>
+  92:	08 95       	ret
+
+00000094 <Rgb_show>:
+  94:	84 b3       	in	r24, 0x14	; 20
+  96:	87 60       	ori	r24, 0x07	; 7
+  98:	84 bb       	out	0x14, r24	; 20
+  9a:	e0 91 7b 00 	lds	r30, 0x007B	; 0x80007b <tp_cnt>
+  9e:	8e 2f       	mov	r24, r30
+  a0:	90 e0       	ldi	r25, 0x00	; 0
+  a2:	8a 30       	cpi	r24, 0x0A	; 10
+  a4:	91 05       	cpc	r25, r1
+  a6:	c0 f4       	brcc	.+48     	; 0xd8 <Rgb_show+0x44>
+  a8:	fc 01       	movw	r30, r24
+  aa:	ed 5e       	subi	r30, 0xED	; 237
+  ac:	ff 4f       	sbci	r31, 0xFF	; 255
+  ae:	09 94       	ijmp
+  b0:	a8 9a       	sbi	0x15, 0	; 21
+  b2:	08 95       	ret
+  b4:	a9 9a       	sbi	0x15, 1	; 21
+  b6:	08 95       	ret
+  b8:	aa 9a       	sbi	0x15, 2	; 21
+  ba:	08 95       	ret
+  bc:	a8 98       	cbi	0x15, 0	; 21
+  be:	08 95       	ret
+  c0:	a9 98       	cbi	0x15, 1	; 21
+  c2:	08 95       	ret
+  c4:	aa 98       	cbi	0x15, 2	; 21
+  c6:	08 95       	ret
+  c8:	a8 9a       	sbi	0x15, 0	; 21
+  ca:	08 95       	ret
+  cc:	a9 9a       	sbi	0x15, 1	; 21
+  ce:	08 95       	ret
+  d0:	aa 9a       	sbi	0x15, 2	; 21
+  d2:	08 95       	ret
+  d4:	aa 98       	cbi	0x15, 2	; 21
+  d6:	08 95       	ret
+  d8:	10 92 7b 00 	sts	0x007B, r1	; 0x80007b <tp_cnt>
+  dc:	08 95       	ret
+
+000000de <TWI_Init>:
+  de:	11 b8       	out	0x01, r1	; 1
+  e0:	82 e0       	ldi	r24, 0x02	; 2
+  e2:	80 b9       	out	0x00, r24	; 0
+  e4:	84 e0       	ldi	r24, 0x04	; 4
+  e6:	86 bf       	out	0x36, r24	; 54
+  e8:	08 95       	ret
+
+000000ea <TWI_Start>:
+  ea:	84 ea       	ldi	r24, 0xA4	; 164
+  ec:	86 bf       	out	0x36, r24	; 54
+  ee:	06 b6       	in	r0, 0x36	; 54
+  f0:	07 fe       	sbrs	r0, 7
+  f2:	fd cf       	rjmp	.-6      	; 0xee <TWI_Start+0x4>
+  f4:	08 95       	ret
+
+000000f6 <TWI_Write>:
+  f6:	83 b9       	out	0x03, r24	; 3
+  f8:	84 e8       	ldi	r24, 0x84	; 132
+  fa:	86 bf       	out	0x36, r24	; 54
+  fc:	06 b6       	in	r0, 0x36	; 54
+  fe:	07 fe       	sbrs	r0, 7
+ 100:	fd cf       	rjmp	.-6      	; 0xfc <TWI_Write+0x6>
+ 102:	08 95       	ret
+
+00000104 <TWI_Write_LCD>:
+ 104:	cf 93       	push	r28
+ 106:	c8 2f       	mov	r28, r24
+ 108:	f0 df       	rcall	.-32     	; 0xea <TWI_Start>
+ 10a:	81 b1       	in	r24, 0x01	; 1
+ 10c:	88 7f       	andi	r24, 0xF8	; 248
+ 10e:	88 30       	cpi	r24, 0x08	; 8
+ 110:	89 f4       	brne	.+34     	; 0x134 <TWI_Write_LCD+0x30>
+ 112:	8e e4       	ldi	r24, 0x4E	; 78
+ 114:	f0 df       	rcall	.-32     	; 0xf6 <TWI_Write>
+ 116:	81 b1       	in	r24, 0x01	; 1
+ 118:	88 7f       	andi	r24, 0xF8	; 248
+ 11a:	88 31       	cpi	r24, 0x18	; 24
+ 11c:	69 f4       	brne	.+26     	; 0x138 <TWI_Write_LCD+0x34>
+ 11e:	8c 2f       	mov	r24, r28
+ 120:	88 60       	ori	r24, 0x08	; 8
+ 122:	e9 df       	rcall	.-46     	; 0xf6 <TWI_Write>
+ 124:	81 b1       	in	r24, 0x01	; 1
+ 126:	88 7f       	andi	r24, 0xF8	; 248
+ 128:	88 32       	cpi	r24, 0x28	; 40
+ 12a:	41 f4       	brne	.+16     	; 0x13c <TWI_Write_LCD+0x38>
+ 12c:	84 e9       	ldi	r24, 0x94	; 148
+ 12e:	86 bf       	out	0x36, r24	; 54
+ 130:	81 e0       	ldi	r24, 0x01	; 1
+ 132:	05 c0       	rjmp	.+10     	; 0x13e <TWI_Write_LCD+0x3a>
+ 134:	80 e0       	ldi	r24, 0x00	; 0
+ 136:	03 c0       	rjmp	.+6      	; 0x13e <TWI_Write_LCD+0x3a>
+ 138:	80 e0       	ldi	r24, 0x00	; 0
+ 13a:	01 c0       	rjmp	.+2      	; 0x13e <TWI_Write_LCD+0x3a>
+ 13c:	80 e0       	ldi	r24, 0x00	; 0
+ 13e:	cf 91       	pop	r28
+ 140:	08 95       	ret
+
+00000142 <LCD_4Bit_Write>:
+ 142:	cf 93       	push	r28
+ 144:	c8 2f       	mov	r28, r24
+ 146:	de df       	rcall	.-68     	; 0x104 <TWI_Write_LCD>
+ 148:	00 00       	nop
+ 14a:	8c 2f       	mov	r24, r28
+ 14c:	84 60       	ori	r24, 0x04	; 4
+ 14e:	da df       	rcall	.-76     	; 0x104 <TWI_Write_LCD>
+ 150:	00 00       	nop
+ 152:	8c 2f       	mov	r24, r28
+ 154:	8b 7f       	andi	r24, 0xFB	; 251
+ 156:	d6 df       	rcall	.-84     	; 0x104 <TWI_Write_LCD>
+ 158:	80 e1       	ldi	r24, 0x10	; 16
+ 15a:	8a 95       	dec	r24
+ 15c:	f1 f7       	brne	.-4      	; 0x15a <LCD_4Bit_Write+0x18>
+ 15e:	00 c0       	rjmp	.+0      	; 0x160 <LCD_4Bit_Write+0x1e>
+ 160:	cf 91       	pop	r28
+ 162:	08 95       	ret
+
+00000164 <LCD_8Bit_Write>:
+ 164:	cf 93       	push	r28
+ 166:	df 93       	push	r29
+ 168:	c8 2f       	mov	r28, r24
+ 16a:	d6 2f       	mov	r29, r22
+ 16c:	80 7f       	andi	r24, 0xF0	; 240
+ 16e:	86 2b       	or	r24, r22
+ 170:	e8 df       	rcall	.-48     	; 0x142 <LCD_4Bit_Write>
+ 172:	20 e1       	ldi	r18, 0x10	; 16
+ 174:	c2 9f       	mul	r28, r18
+ 176:	c0 01       	movw	r24, r0
+ 178:	11 24       	eor	r1, r1
+ 17a:	8d 2b       	or	r24, r29
+ 17c:	e2 df       	rcall	.-60     	; 0x142 <LCD_4Bit_Write>
+ 17e:	df 91       	pop	r29
+ 180:	cf 91       	pop	r28
+ 182:	08 95       	ret
+
+00000184 <LCD_Init>:
+ 184:	83 ed       	ldi	r24, 0xD3	; 211
+ 186:	90 e3       	ldi	r25, 0x30	; 48
+ 188:	01 97       	sbiw	r24, 0x01	; 1
+ 18a:	f1 f7       	brne	.-4      	; 0x188 <LCD_Init+0x4>
+ 18c:	00 c0       	rjmp	.+0      	; 0x18e <LCD_Init+0xa>
+ 18e:	00 00       	nop
+ 190:	80 e3       	ldi	r24, 0x30	; 48
+ 192:	d7 df       	rcall	.-82     	; 0x142 <LCD_4Bit_Write>
+ 194:	84 e6       	ldi	r24, 0x64	; 100
+ 196:	94 e0       	ldi	r25, 0x04	; 4
+ 198:	01 97       	sbiw	r24, 0x01	; 1
+ 19a:	f1 f7       	brne	.-4      	; 0x198 <LCD_Init+0x14>
+ 19c:	00 c0       	rjmp	.+0      	; 0x19e <LCD_Init+0x1a>
+ 19e:	00 00       	nop
+ 1a0:	80 e3       	ldi	r24, 0x30	; 48
+ 1a2:	cf df       	rcall	.-98     	; 0x142 <LCD_4Bit_Write>
+ 1a4:	84 e6       	ldi	r24, 0x64	; 100
+ 1a6:	94 e0       	ldi	r25, 0x04	; 4
+ 1a8:	01 97       	sbiw	r24, 0x01	; 1
+ 1aa:	f1 f7       	brne	.-4      	; 0x1a8 <LCD_Init+0x24>
+ 1ac:	00 c0       	rjmp	.+0      	; 0x1ae <LCD_Init+0x2a>
+ 1ae:	00 00       	nop
+ 1b0:	80 e3       	ldi	r24, 0x30	; 48
+ 1b2:	c7 df       	rcall	.-114    	; 0x142 <LCD_4Bit_Write>
+ 1b4:	92 e3       	ldi	r25, 0x32	; 50
+ 1b6:	9a 95       	dec	r25
+ 1b8:	f1 f7       	brne	.-4      	; 0x1b6 <LCD_Init+0x32>
+ 1ba:	80 e2       	ldi	r24, 0x20	; 32
+ 1bc:	c2 df       	rcall	.-124    	; 0x142 <LCD_4Bit_Write>
+ 1be:	60 e0       	ldi	r22, 0x00	; 0
+ 1c0:	88 e2       	ldi	r24, 0x28	; 40
+ 1c2:	d0 df       	rcall	.-96     	; 0x164 <LCD_8Bit_Write>
+ 1c4:	60 e0       	ldi	r22, 0x00	; 0
+ 1c6:	8c e0       	ldi	r24, 0x0C	; 12
+ 1c8:	cd df       	rcall	.-102    	; 0x164 <LCD_8Bit_Write>
+ 1ca:	60 e0       	ldi	r22, 0x00	; 0
+ 1cc:	81 e0       	ldi	r24, 0x01	; 1
+ 1ce:	ca df       	rcall	.-108    	; 0x164 <LCD_8Bit_Write>
+ 1d0:	83 ef       	ldi	r24, 0xF3	; 243
+ 1d2:	91 e0       	ldi	r25, 0x01	; 1
+ 1d4:	01 97       	sbiw	r24, 0x01	; 1
+ 1d6:	f1 f7       	brne	.-4      	; 0x1d4 <LCD_Init+0x50>
+ 1d8:	00 c0       	rjmp	.+0      	; 0x1da <LCD_Init+0x56>
+ 1da:	00 00       	nop
+ 1dc:	60 e0       	ldi	r22, 0x00	; 0
+ 1de:	86 e0       	ldi	r24, 0x06	; 6
+ 1e0:	c1 df       	rcall	.-126    	; 0x164 <LCD_8Bit_Write>
+ 1e2:	60 e0       	ldi	r22, 0x00	; 0
+ 1e4:	82 e0       	ldi	r24, 0x02	; 2
+ 1e6:	be df       	rcall	.-132    	; 0x164 <LCD_8Bit_Write>
+ 1e8:	83 ef       	ldi	r24, 0xF3	; 243
+ 1ea:	91 e0       	ldi	r25, 0x01	; 1
+ 1ec:	01 97       	sbiw	r24, 0x01	; 1
+ 1ee:	f1 f7       	brne	.-4      	; 0x1ec <LCD_Init+0x68>
+ 1f0:	00 c0       	rjmp	.+0      	; 0x1f2 <LCD_Init+0x6e>
+ 1f2:	00 00       	nop
+ 1f4:	08 95       	ret
+
+000001f6 <LCD_Set_Cursor_Location>:
+ 1f6:	cf 93       	push	r28
+ 1f8:	df 93       	push	r29
+ 1fa:	00 d0       	rcall	.+0      	; 0x1fc <LCD_Set_Cursor_Location+0x6>
+ 1fc:	cd b7       	in	r28, 0x3d	; 61
+ 1fe:	de b7       	in	r29, 0x3e	; 62
+ 200:	19 82       	std	Y+1, r1	; 0x01
+ 202:	90 e4       	ldi	r25, 0x40	; 64
+ 204:	9a 83       	std	Y+2, r25	; 0x02
+ 206:	fe 01       	movw	r30, r28
+ 208:	e8 0f       	add	r30, r24
+ 20a:	f1 1d       	adc	r31, r1
+ 20c:	81 81       	ldd	r24, Z+1	; 0x01
+ 20e:	86 0f       	add	r24, r22
+ 210:	60 e0       	ldi	r22, 0x00	; 0
+ 212:	80 68       	ori	r24, 0x80	; 128
+ 214:	a7 df       	rcall	.-178    	; 0x164 <LCD_8Bit_Write>
+ 216:	0f 90       	pop	r0
+ 218:	0f 90       	pop	r0
+ 21a:	df 91       	pop	r29
+ 21c:	cf 91       	pop	r28
+ 21e:	08 95       	ret
+
+00000220 <LCD_Write_String>:
+
+void LCD_Write_String(unsigned char row,unsigned char col,const char *pStr)
+//在指定位置显示串
+{
+ 220:	cf 93       	push	r28
+ 222:	df 93       	push	r29
+ 224:	ea 01       	movw	r28, r20
+    LCD_Set_Cursor_Location(row,col);
+ 226:	e7 df       	rcall	.-50     	; 0x1f6 <LCD_Set_Cursor_Location>
+    while((*pStr) != '\0')
+ 228:	88 81       	ld	r24, Y
+ 22a:	88 23       	and	r24, r24
+ 22c:	31 f0       	breq	.+12     	; 0x23a <LCD_Write_String+0x1a>
+ 22e:	21 96       	adiw	r28, 0x01	; 1
+    {
+        LCD_8Bit_Write(*pStr,1);
+ 230:	61 e0       	ldi	r22, 0x01	; 1
+ 232:	98 df       	rcall	.-208    	; 0x164 <LCD_8Bit_Write>
+
+void LCD_Write_String(unsigned char row,unsigned char col,const char *pStr)
+//在指定位置显示串
+{
+    LCD_Set_Cursor_Location(row,col);
+    while((*pStr) != '\0')
+ 234:	89 91       	ld	r24, Y+
+ 236:	81 11       	cpse	r24, r1
+ 238:	fb cf       	rjmp	.-10     	; 0x230 <LCD_Write_String+0x10>
+    {
+        LCD_8Bit_Write(*pStr,1);
+        pStr ++;
+    }
+}
+ 23a:	df 91       	pop	r29
+ 23c:	cf 91       	pop	r28
+ 23e:	08 95       	ret
+
+00000240 <lcd_show>:
+		case 9: PORTC &=~(1<<PORTC2);break;
+		default:tp_cnt=0; break;
+	}
+}
+void lcd_show()
+{ char ch[5]={'0'},i; //
+ 240:	0f 93       	push	r16
+ 242:	1f 93       	push	r17
+ 244:	cf 93       	push	r28
+ 246:	df 93       	push	r29
+ 248:	00 d0       	rcall	.+0      	; 0x24a <lcd_show+0xa>
+ 24a:	00 d0       	rcall	.+0      	; 0x24c <lcd_show+0xc>
+ 24c:	1f 92       	push	r1
+ 24e:	cd b7       	in	r28, 0x3d	; 61
+ 250:	de b7       	in	r29, 0x3e	; 62
+ 252:	8e 01       	movw	r16, r28
+ 254:	0f 5f       	subi	r16, 0xFF	; 255
+ 256:	1f 4f       	sbci	r17, 0xFF	; 255
+ 258:	85 e0       	ldi	r24, 0x05	; 5
+ 25a:	f8 01       	movw	r30, r16
+ 25c:	11 92       	st	Z+, r1
+ 25e:	8a 95       	dec	r24
+ 260:	e9 f7       	brne	.-6      	; 0x25c <lcd_show+0x1c>
+unsigned char t=tp_cnt;
+ 262:	80 91 7b 00 	lds	r24, 0x007B	; 0x80007b <tp_cnt>
+for(i=0;i<3;i++)
+{ ch[2-i]=t%10+48; //数字转换为字符
+ 266:	2d ec       	ldi	r18, 0xCD	; 205
+ 268:	82 9f       	mul	r24, r18
+ 26a:	91 2d       	mov	r25, r1
+ 26c:	11 24       	eor	r1, r1
+ 26e:	96 95       	lsr	r25
+ 270:	96 95       	lsr	r25
+ 272:	96 95       	lsr	r25
+ 274:	49 2f       	mov	r20, r25
+ 276:	44 0f       	add	r20, r20
+ 278:	34 2f       	mov	r19, r20
+ 27a:	33 0f       	add	r19, r19
+ 27c:	33 0f       	add	r19, r19
+ 27e:	34 0f       	add	r19, r20
+ 280:	f8 2f       	mov	r31, r24
+ 282:	f3 1b       	sub	r31, r19
+ 284:	3f 2f       	mov	r19, r31
+ 286:	30 5d       	subi	r19, 0xD0	; 208
+ 288:	3b 83       	std	Y+3, r19	; 0x03
+ 28a:	92 9f       	mul	r25, r18
+ 28c:	21 2d       	mov	r18, r1
+ 28e:	11 24       	eor	r1, r1
+ 290:	26 95       	lsr	r18
+ 292:	26 95       	lsr	r18
+ 294:	26 95       	lsr	r18
+ 296:	22 0f       	add	r18, r18
+ 298:	32 2f       	mov	r19, r18
+ 29a:	33 0f       	add	r19, r19
+ 29c:	33 0f       	add	r19, r19
+ 29e:	23 0f       	add	r18, r19
+ 2a0:	92 1b       	sub	r25, r18
+ 2a2:	90 5d       	subi	r25, 0xD0	; 208
+ 2a4:	9a 83       	std	Y+2, r25	; 0x02
+ 2a6:	99 e2       	ldi	r25, 0x29	; 41
+ 2a8:	89 9f       	mul	r24, r25
+ 2aa:	81 2d       	mov	r24, r1
+ 2ac:	11 24       	eor	r1, r1
+ 2ae:	82 95       	swap	r24
+ 2b0:	8f 70       	andi	r24, 0x0F	; 15
+ 2b2:	80 5d       	subi	r24, 0xD0	; 208
+ 2b4:	89 83       	std	Y+1, r24	; 0x01
+t/=10; } //去掉低位
+cli(); //全局中断关，不然会影响显示过程，定时器0的中断也停止了
+ 2b6:	f8 94       	cli
+LCD_Write_String(0,1,"times:");
+ 2b8:	42 e7       	ldi	r20, 0x72	; 114
+ 2ba:	50 e0       	ldi	r21, 0x00	; 0
+ 2bc:	61 e0       	ldi	r22, 0x01	; 1
+ 2be:	80 e0       	ldi	r24, 0x00	; 0
+ 2c0:	af df       	rcall	.-162    	; 0x220 <LCD_Write_String>
+LCD_Write_String(0,8,ch);
+ 2c2:	a8 01       	movw	r20, r16
+ 2c4:	68 e0       	ldi	r22, 0x08	; 8
+ 2c6:	80 e0       	ldi	r24, 0x00	; 0
+ 2c8:	ab df       	rcall	.-170    	; 0x220 <LCD_Write_String>
+sei(); //全局中断开
+ 2ca:	78 94       	sei
+}
+ 2cc:	0f 90       	pop	r0
+ 2ce:	0f 90       	pop	r0
+ 2d0:	0f 90       	pop	r0
+ 2d2:	0f 90       	pop	r0
+ 2d4:	0f 90       	pop	r0
+ 2d6:	df 91       	pop	r29
+ 2d8:	cf 91       	pop	r28
+ 2da:	1f 91       	pop	r17
+ 2dc:	0f 91       	pop	r16
+ 2de:	08 95       	ret
+
+000002e0 <main>:
+int ticks[MAX_TASKS]={3,7,19}; //对应于任务执行间隔（时间片），单位1ms
+ OSTASK runtask[MAX_TASKS]= {{tp_task,3},{Rgb_show,7},{lcd_show,19}};//任务与执行时间操作列表，方便循环处理
+int main(void)
+{ unsigned char i=0;
+	TWI_Init(); LCD_Init(); //lcd1602初始化
+ 2e0:	fe de       	rcall	.-516    	; 0xde <TWI_Init>
+ 2e2:	50 df       	rcall	.-352    	; 0x184 <LCD_Init>
+	//定时器0的初始化：1ms的定时与中断，用做时间片基准，中断定时等
+	TCNT0 = 131; //1MHz的8分频，从131计数到255中断一次正好1ms
+ 2e4:	83 e8       	ldi	r24, 0x83	; 131
+ 2e6:	82 bf       	out	0x32, r24	; 50
+	TIMSK = (1<<TOIE0) ; //定时器0的溢出中断开
+ 2e8:	81 e0       	ldi	r24, 0x01	; 1
+ 2ea:	89 bf       	out	0x39, r24	; 57
+	TCCR0 = (1<<CS01); //CPU时钟的8分频，定时器0开始工作
+ 2ec:	82 e0       	ldi	r24, 0x02	; 2
+ 2ee:	83 bf       	out	0x33, r24	; 51
+	sei(); //全局中断开
+ 2f0:	78 94       	sei
+ 2f2:	0f 2e       	mov	r0, r31
+ 2f4:	fc e6       	ldi	r31, 0x6C	; 108
+ 2f6:	ef 2e       	mov	r14, r31
+ 2f8:	f0 e0       	ldi	r31, 0x00	; 0
+ 2fa:	ff 2e       	mov	r15, r31
+ 2fc:	f0 2d       	mov	r31, r0
+ 2fe:	c0 e6       	ldi	r28, 0x60	; 96
+ 300:	d0 e0       	ldi	r29, 0x00	; 0
+ 302:	0c e6       	ldi	r16, 0x6C	; 108
+ 304:	10 e0       	ldi	r17, 0x00	; 0
+	while (1) {
+		for(i=0;i<MAX_TASKS;i++) { //调度
+			if(runtask[i].ticks==0) { //到达此任务的执行（时间片耗尽）
+ 306:	8a 81       	ldd	r24, Y+2	; 0x02
+ 308:	9b 81       	ldd	r25, Y+3	; 0x03
+ 30a:	89 2b       	or	r24, r25
+ 30c:	41 f4       	brne	.+16     	; 0x31e <main+0x3e>
+				runtask[i].ticks=ticks[i]; //恢复此任务的时间片
+ 30e:	f8 01       	movw	r30, r16
+ 310:	80 81       	ld	r24, Z
+ 312:	91 81       	ldd	r25, Z+1	; 0x01
+ 314:	9b 83       	std	Y+3, r25	; 0x03
+ 316:	8a 83       	std	Y+2, r24	; 0x02
+			runtask[i].ftask(); } //执行相应的任务
+ 318:	e8 81       	ld	r30, Y
+ 31a:	f9 81       	ldd	r31, Y+1	; 0x01
+ 31c:	09 95       	icall
+ 31e:	24 96       	adiw	r28, 0x04	; 4
+ 320:	0e 5f       	subi	r16, 0xFE	; 254
+ 322:	1f 4f       	sbci	r17, 0xFF	; 255
+	TCNT0 = 131; //1MHz的8分频，从131计数到255中断一次正好1ms
+	TIMSK = (1<<TOIE0) ; //定时器0的溢出中断开
+	TCCR0 = (1<<CS01); //CPU时钟的8分频，定时器0开始工作
+	sei(); //全局中断开
+	while (1) {
+		for(i=0;i<MAX_TASKS;i++) { //调度
+ 324:	ce 15       	cp	r28, r14
+ 326:	df 05       	cpc	r29, r15
+ 328:	71 f7       	brne	.-36     	; 0x306 <main+0x26>
+ 32a:	84 e6       	ldi	r24, 0x64	; 100
+ 32c:	81 50       	subi	r24, 0x01	; 1
+			if(runtask[i].ticks==0) { //到达此任务的执行（时间片耗尽）
+				runtask[i].ticks=ticks[i]; //恢复此任务的时间片
+			runtask[i].ftask(); } //执行相应的任务
+		}
+		for(i=0;i<100;i++); /*延时*/
+ 32e:	f1 f7       	brne	.-4      	; 0x32c <main+0x4c>
+ 330:	e6 cf       	rjmp	.-52     	; 0x2fe <main+0x1e>
+
+00000332 <__vector_9>:
+	} } //while和main结束
+	
+	ISR(TIMER0_OVF_vect) {
+ 332:	1f 92       	push	r1
+ 334:	0f 92       	push	r0
+ 336:	0f b6       	in	r0, 0x3f	; 63
+ 338:	0f 92       	push	r0
+ 33a:	11 24       	eor	r1, r1
+ 33c:	2f 93       	push	r18
+ 33e:	3f 93       	push	r19
+ 340:	8f 93       	push	r24
+ 342:	9f 93       	push	r25
+ 344:	ef 93       	push	r30
+ 346:	ff 93       	push	r31
+			TCNT0 = 131;            // 初始值，1ms后溢出
+ 348:	83 e8       	ldi	r24, 0x83	; 131
+ 34a:	82 bf       	out	0x32, r24	; 50
+			TIMSK = (1<<TOIE0);    // 开启定时器0溢出中断
+ 34c:	81 e0       	ldi	r24, 0x01	; 1
+ 34e:	89 bf       	out	0x39, r24	; 57
+			TCCR0 = (1<<CS01);     // 8分频，启动定时器             // 重置定时器初始值
+ 350:	82 e0       	ldi	r24, 0x02	; 2
+ 352:	83 bf       	out	0x33, r24	; 51
+ 354:	e0 e6       	ldi	r30, 0x60	; 96
+ 356:	f0 e0       	ldi	r31, 0x00	; 0
+ 358:	2c e6       	ldi	r18, 0x6C	; 108
+ 35a:	30 e0       	ldi	r19, 0x00	; 0
+		for (uint8_t i=0; i<MAX_TASKS; i++) {
+			if (runtask[i].ticks > 0) runtask[i].ticks--; // 时间片递减
+ 35c:	82 81       	ldd	r24, Z+2	; 0x02
+ 35e:	93 81       	ldd	r25, Z+3	; 0x03
+ 360:	18 16       	cp	r1, r24
+ 362:	19 06       	cpc	r1, r25
+ 364:	1c f4       	brge	.+6      	; 0x36c <__vector_9+0x3a>
+ 366:	01 97       	sbiw	r24, 0x01	; 1
+ 368:	93 83       	std	Z+3, r25	; 0x03
+ 36a:	82 83       	std	Z+2, r24	; 0x02
+ 36c:	34 96       	adiw	r30, 0x04	; 4
+	
+	ISR(TIMER0_OVF_vect) {
+			TCNT0 = 131;            // 初始值，1ms后溢出
+			TIMSK = (1<<TOIE0);    // 开启定时器0溢出中断
+			TCCR0 = (1<<CS01);     // 8分频，启动定时器             // 重置定时器初始值
+		for (uint8_t i=0; i<MAX_TASKS; i++) {
+ 36e:	e2 17       	cp	r30, r18
+ 370:	f3 07       	cpc	r31, r19
+ 372:	a1 f7       	brne	.-24     	; 0x35c <__vector_9+0x2a>
+			if (runtask[i].ticks > 0) runtask[i].ticks--; // 时间片递减
+		}
+	}
+ 374:	ff 91       	pop	r31
+ 376:	ef 91       	pop	r30
+ 378:	9f 91       	pop	r25
+ 37a:	8f 91       	pop	r24
+ 37c:	3f 91       	pop	r19
+ 37e:	2f 91       	pop	r18
+ 380:	0f 90       	pop	r0
+ 382:	0f be       	out	0x3f, r0	; 63
+ 384:	0f 90       	pop	r0
+ 386:	1f 90       	pop	r1
+ 388:	18 95       	reti
+
+0000038a <_exit>:
+ 38a:	f8 94       	cli
+
+0000038c <__stop_program>:
+ 38c:	ff cf       	rjmp	.-2      	; 0x38c <__stop_program>

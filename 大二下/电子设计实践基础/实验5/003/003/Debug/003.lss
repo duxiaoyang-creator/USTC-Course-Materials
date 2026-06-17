@@ -1,0 +1,182 @@
+
+003.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000d0  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000144  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  00800060  00800060  00000144  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000144  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000174  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  000001b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000547  00000000  00000000  000001d8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000004cd  00000000  00000000  0000071f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000220  00000000  00000000  00000bec  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000048  00000000  00000000  00000e0c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000002b7  00000000  00000000  00000e54  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000049  00000000  00000000  0000110b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  00001154  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	32 c0       	rjmp	.+100    	; 0x76 <__vector_8>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a1 36       	cpi	r26, 0x61	; 97
+  3e:	b2 07       	cpc	r27, r18
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	02 d0       	rcall	.+4      	; 0x48 <main>
+  44:	43 c0       	rjmp	.+134    	; 0xcc <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <main>:
+ */ 
+#include <avr/io.h>
+#include <avr/interrupt.h>
+int main(void)
+{
+	DDRB |=(1<<DDRB1)|(1<<DDRB2); //PB1(OC1A),PB2(OC1B)为输出
+  48:	87 b3       	in	r24, 0x17	; 23
+  4a:	86 60       	ori	r24, 0x06	; 6
+  4c:	87 bb       	out	0x17, r24	; 23
+	ICR1 = 500; //设置TOP值
+  4e:	84 ef       	ldi	r24, 0xF4	; 244
+  50:	91 e0       	ldi	r25, 0x01	; 1
+  52:	97 bd       	out	0x27, r25	; 39
+  54:	86 bd       	out	0x26, r24	; 38
+	OCR1A = 1; //设置A路比较值
+  56:	81 e0       	ldi	r24, 0x01	; 1
+  58:	90 e0       	ldi	r25, 0x00	; 0
+  5a:	9b bd       	out	0x2b, r25	; 43
+  5c:	8a bd       	out	0x2a, r24	; 42
+	OCR1B = 1; //设置B路比较值
+  5e:	99 bd       	out	0x29, r25	; 41
+  60:	88 bd       	out	0x28, r24	; 40
+	TCCR1A |= (1<<COM1A1)|(1<<COM1A0)|(1<<COM1B1)|(1<<COM1B0);
+  62:	8f b5       	in	r24, 0x2f	; 47
+  64:	80 6f       	ori	r24, 0xF0	; 240
+  66:	8f bd       	out	0x2f, r24	; 47
+	//设置’输出比较’管脚切换方式等
+	TIMSK = (1<<TOIE1); //开启TC1溢出中断
+  68:	84 e0       	ldi	r24, 0x04	; 4
+  6a:	89 bf       	out	0x39, r24	; 57
+	sei(); //开启全局中断
+  6c:	78 94       	sei
+	TCCR1B |= (1<<WGM13)|(1<<CS11); //设置PWM模式为8，时钟8分频
+  6e:	8e b5       	in	r24, 0x2e	; 46
+  70:	82 61       	ori	r24, 0x12	; 18
+  72:	8e bd       	out	0x2e, r24	; 46
+  74:	ff cf       	rjmp	.-2      	; 0x74 <main+0x2c>
+
+00000076 <__vector_8>:
+	while (1)
+	{ }
+}unsigned char ui_cnt=0; //统计中断次数，确定OCR1A/B的值
+ISR(TIMER1_OVF_vect)
+{ ui_cnt++; //统计TC1溢出中断次数
+  76:	1f 92       	push	r1
+  78:	0f 92       	push	r0
+  7a:	0f b6       	in	r0, 0x3f	; 63
+  7c:	0f 92       	push	r0
+  7e:	11 24       	eor	r1, r1
+  80:	8f 93       	push	r24
+  82:	9f 93       	push	r25
+  84:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  88:	8f 5f       	subi	r24, 0xFF	; 255
+  8a:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	if(ui_cnt>249)ui_cnt=0; //统计到250次时清零
+  8e:	8a 3f       	cpi	r24, 0xFA	; 250
+  90:	18 f0       	brcs	.+6      	; 0x98 <__vector_8+0x22>
+  92:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+  96:	02 c0       	rjmp	.+4      	; 0x9c <__vector_8+0x26>
+	if(ui_cnt<125) //前半程
+  98:	8d 37       	cpi	r24, 0x7D	; 125
+  9a:	40 f4       	brcc	.+16     	; 0xac <__vector_8+0x36>
+	{ OCR1A = 0; //高电平的持续时间长
+  9c:	1b bc       	out	0x2b, r1	; 43
+  9e:	1a bc       	out	0x2a, r1	; 42
+		OCR1B +=4; //高电平的持续时间渐短
+  a0:	88 b5       	in	r24, 0x28	; 40
+  a2:	99 b5       	in	r25, 0x29	; 41
+  a4:	04 96       	adiw	r24, 0x04	; 4
+  a6:	99 bd       	out	0x29, r25	; 41
+  a8:	88 bd       	out	0x28, r24	; 40
+  aa:	09 c0       	rjmp	.+18     	; 0xbe <__vector_8+0x48>
+	}
+	else //后半程
+	{ OCR1A =500;//低电平的持续时间长
+  ac:	84 ef       	ldi	r24, 0xF4	; 244
+  ae:	91 e0       	ldi	r25, 0x01	; 1
+  b0:	9b bd       	out	0x2b, r25	; 43
+  b2:	8a bd       	out	0x2a, r24	; 42
+		OCR1B -=4; //高电平的持续时间渐长
+  b4:	88 b5       	in	r24, 0x28	; 40
+  b6:	99 b5       	in	r25, 0x29	; 41
+  b8:	04 97       	sbiw	r24, 0x04	; 4
+  ba:	99 bd       	out	0x29, r25	; 41
+  bc:	88 bd       	out	0x28, r24	; 40
+	}
+  be:	9f 91       	pop	r25
+  c0:	8f 91       	pop	r24
+  c2:	0f 90       	pop	r0
+  c4:	0f be       	out	0x3f, r0	; 63
+  c6:	0f 90       	pop	r0
+  c8:	1f 90       	pop	r1
+  ca:	18 95       	reti
+
+000000cc <_exit>:
+  cc:	f8 94       	cli
+
+000000ce <__stop_program>:
+  ce:	ff cf       	rjmp	.-2      	; 0xce <__stop_program>

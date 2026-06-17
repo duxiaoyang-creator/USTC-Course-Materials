@@ -1,0 +1,692 @@
+{
+  "uuid": "e09831dead23801a196a1c741a8cefac",
+  "path": "Offline/PCB-IEDP",
+  "name": "PCB-IEDP",
+  "content": "电子设计实践基础：杜晓阳-PB23051023",
+  "created_at": "2025-03-15 14:23:17",
+  "updated_at": "2025-03-24 15:55:36",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "05086d108c23d9b66ac2502523b50fea",
+      "title": "SCH-IEDP",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "305713aa059ee9200f82c7329084eabe": 1,
+        "58557ab5dac544259249b4981dd6020c": 12,
+        "c99800e04af1474aaf1069c95dc7e57a": 7,
+        "2317d63812e0e62542e23ec5c3e7f616": 1,
+        "065c714a79902f32b85ecc9cd691022c": 6,
+        "e71cc5f8893046428437ab6a9ee8f96a": 2,
+        "fc0b59a1fb8849ef8c2910a10e104160": 1,
+        "4ae178cd3b173aa4320e54aa4cc30360": 1,
+        "c2be40da2f6f4a33a6fa25c0954f37f0": 1,
+        "15b6fce2ba03440fad7958bbf8c987c2": 4,
+        "ca9cdc5ad734445180bd27a85a83c0b2": 1,
+        "76d1280f2be942b4a7894b917959b68f": 1,
+        "4318c70ac6fb4ca2b712fcd4ee9b1ed6": 1,
+        "755cef6a6b1d4c819e568df16d47ade8": 3,
+        "4df22a098bb342fa8f5320df25bf4055": 18,
+        "e408e86eb51c17a27acc3a3dfbfd8633": 13,
+        "fff7419b5b324b1894efc831faac693a": 2,
+        "27abc73ba5033d1126fd4d36740da2a2": 1,
+        "a3e622f050498a28a20d9c3b7c9701ac": 1,
+        "d230e36580fb45eda55855df3389d113": 4,
+        "be5678ac16d04fac91113468a2c642c2": 2,
+        "2d447d5ba17e44728943e678befa911b": 2
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "22pF",
+          2,
+          "C0805",
+          "C1,C2",
+          {
+            "Manufacturer Part": "0805N220J101CT",
+            "Manufacturer": "Walsin(华新科)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C296090"
+          }
+        ],
+        [
+          "100nF",
+          3,
+          "CAP-TH_BD2.2-L3.2-P5.08-D0.6",
+          "C3,C4,C6",
+          {
+            "Manufacturer Part": "ACC-B104K500P52",
+            "Manufacturer": "FH(风华)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C94703"
+          }
+        ],
+        [
+          "100uF",
+          1,
+          "CAP-TH_BD5.0-P2.00-D0.8-FD",
+          "C5",
+          {
+            "Manufacturer Part": "25YXA100MEFC5X11",
+            "Manufacturer": "rubycon(红宝石)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C338183"
+          }
+        ],
+        [
+          "1N4007",
+          4,
+          "SENSOR-TH_BD4.0-P2.54-D0.5-A",
+          "D1,D2,D3,D4",
+          {
+            "Manufacturer Part": "1N4007A",
+            "Manufacturer": "LRC(乐山无线电)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C5336145"
+          }
+        ],
+        [
+          "JK-SMD0805-050",
+          1,
+          "F0805",
+          "F1",
+          {
+            "Manufacturer Part": "JK-SMD0805-050",
+            "Manufacturer": "JK(金科)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C369150"
+          }
+        ],
+        [
+          "Header-Male-2.54_1x4",
+          12,
+          "HDR-TH_4P-P2.54-V-M",
+          "H1,H2,H12,H13,H14,H15,H22,H23,H24,H25,H27,H28",
+          {
+            "Manufacturer Part": "B-2100S04P-A110",
+            "Manufacturer": "Ckmtw(灿科盟)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C124378"
+          }
+        ],
+        [
+          "Header-Male-2.54_1x8",
+          7,
+          "HDR-TH_8P-P2.54-V-M",
+          "H3,H4,H8,H9,H20,H21,H26",
+          {
+            "Manufacturer Part": "B-2100S08P-A110",
+            "Manufacturer": "Ckmtw(灿科盟)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C124381"
+          }
+        ],
+        [
+          "Header-Male-2.54_2x5",
+          1,
+          "HDR-TH_10P-P2.54-V-M-R2-C5-S2.54",
+          "H5",
+          {
+            "Manufacturer Part": "2*5p排针 2.54mm",
+            "Manufacturer": "null",
+            "Supplier": "LCSC",
+            "Supplier Part": "C28207"
+          }
+        ],
+        [
+          "Female header 2.54-1*14P",
+          6,
+          "HDR-TH_14P-P2.54-V-F-1",
+          "H6,H7,H16,H17,H18,H19",
+          {
+            "Manufacturer Part": "2.54-1*14P母",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C52711"
+          }
+        ],
+        [
+          "Header-Male-2.54_1x10",
+          1,
+          "HDR-TH_10P-P2.54-V-M-1",
+          "H10",
+          {
+            "Manufacturer Part": "2.54-1*10P针",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C57369"
+          }
+        ],
+        [
+          "Header-Female-2.54_1x5",
+          1,
+          "HDR-TH_5P-P2.54-V-F",
+          "H11",
+          {
+            "Manufacturer Part": "2.54-1*5P母",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C50950"
+          }
+        ],
+        [
+          "330Ω",
+          2,
+          "L0805",
+          "L1,L2",
+          {
+            "Manufacturer Part": "CBG201209U301T",
+            "Manufacturer": "FH(风华)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C124101"
+          }
+        ],
+        [
+          "3ARB9HCB",
+          13,
+          "LED0805-RD",
+          "LED1,LED2,LED3,LED4,LED5,LED6,LED7,LED8,LED9,LED10,LED11,LED12,LED13",
+          {
+            "Manufacturer Part": "3ARB9HCB",
+            "Manufacturer": "null",
+            "Supplier": "LCSC",
+            "Supplier Part": "C42016"
+          }
+        ],
+        [
+          "S8550-C",
+          2,
+          "TO-92-3_L4.6-W3.6-P1.27-L",
+          "Q1,Q2",
+          {
+            "Manufacturer Part": "S8550-C",
+            "Manufacturer": "BLUE ROCKET(蓝箭)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C2844047"
+          }
+        ],
+        [
+          "S8050-D",
+          2,
+          "TO-92-3_L4.9-W3.7-P1.27-L",
+          "Q3,Q4",
+          {
+            "Manufacturer Part": "S8050-D",
+            "Manufacturer": "BLUE ROCKET(蓝箭)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C305417"
+          }
+        ],
+        [
+          "1kΩ",
+          14,
+          "R0805",
+          "R1,R6,R7,R8,R9,R10,R11,R12,R17,R18,R19,R20,R21,R22",
+          {
+            "Manufacturer Part": "TR0805B1K00P0525Z",
+            "Manufacturer": "EVER OHMS(天二科技)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C188361"
+          }
+        ],
+        [
+          "100",
+          4,
+          "RES-TH_L3.0-W2.3-P2.54-D0.5",
+          "R2,R3,R4,R5",
+          {
+            "Manufacturer Part": "Y145313K0000V9L",
+            "Manufacturer": "VISHAY(威世)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C1485186"
+          }
+        ],
+        [
+          "330",
+          4,
+          "RES-TH_L3.0-W2.3-P2.54-D0.5",
+          "R13,R14,R15,R16",
+          {
+            "Manufacturer Part": "TR0805B1K00P0525Z",
+            "Manufacturer": "EVER OHMS(天二科技)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C188361"
+          }
+        ],
+        [
+          "ATMEGA8A-PU",
+          1,
+          "DIP-28_L34.6-W7.3-P2.54-LS10.2-BL",
+          "U1",
+          {
+            "Manufacturer Part": "ATMEGA8A-PU",
+            "Manufacturer": "MICROCHIP(美国微芯)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C34931"
+          }
+        ],
+        [
+          "SYD3642ASR",
+          1,
+          "LCD12-2.54-30.0X14.0X7.3MM",
+          "U2",
+          {
+            "Manufacturer Part": "SYD3642ASR",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "ULN2003AN",
+          1,
+          "DIP-16_16P-L20.2-W6.6-P2.54-LS7.6-BL",
+          "U3",
+          {
+            "Manufacturer Part": "ULN2003AN",
+            "Manufacturer": "TI(德州仪器)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C90448"
+          }
+        ],
+        [
+          "920-154A2021Y10104",
+          1,
+          "MICRO-USB-TH_MICRO-USB-A6",
+          "USB1",
+          {
+            "Manufacturer Part": "920-154A2021Y10104",
+            "Manufacturer": "精拓金",
+            "Supplier": "LCSC",
+            "Supplier Part": "C2763112"
+          }
+        ],
+        [
+          "16MHz",
+          1,
+          "OSC-TH_L10.0-W4.5-P5.00",
+          "X1",
+          {
+            "Manufacturer Part": "X49SD16MSD2SC",
+            "Manufacturer": "YXC(扬兴晶振)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C16212"
+          }
+        ]
+      ],
+      "updateTime": 1742737478,
+      "createTime": 1742019797,
+      "histories": [],
+      "created_at": "2025-03-15 14:23:17",
+      "updated_at": "2025-03-23 21:44:38"
+    },
+    {
+      "uuid": "995e9532db99c9abd2af62593ffe40de",
+      "puuid": "e09831dead23801a196a1c741a8cefac",
+      "title": "PCB_PCB-IEDP",
+      "filename": "PCB_PCB-IEDP.json",
+      "description": "",
+      "docType": "3",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "cfb9fc00053a43b4a5e2dc51f28bbee2": 3,
+        "3744bcbe1f464b01ae180f32d7d4b0c4": 1,
+        "daefbe13f13c4f838192caad5e2aecac": 1,
+        "89f5280378144b629de4998ef974b6b8": 12,
+        "7142253ac24c42e1954a7f7d1d66b136": 7,
+        "f6cee6fa27c2492fb4f7613efd503a5c": 1,
+        "1f2cc5db1d57405bb463704e341f5b3e": 6,
+        "ef10e215415a49a49cdabc8e1fed0af1": 1,
+        "5c779b2d00a94a63898d3dd94d7b7ab9": 1,
+        "5f6d901b39d14e468ebc175aa9e59b84": 21,
+        "2f1d96128ab94db491eae99d61bfb39c": 1,
+        "71f86e00e6c54a35b19e360ac373289f": 1,
+        "fdc074a17de54f98a8307f37df2ec6e2": 1,
+        "c9c6eea978e64b23889483181a791a9e": 1,
+        "2021a08f97ec46e3af2a49d0a1d07cee": 1,
+        "192772e072a64753877247a673fe06f5": 11,
+        "a8834d810e384ae1bfe2643c5db26b52": 1,
+        "32b58ae19b3b4651be920b50e68a67b6": 2,
+        "6924b36489de4921bb29ca14bf27c33f": 2,
+        "7208967e406c4353ba8c6b791bcb6312": 4,
+        "a267edbe7c3c4a16b85fd51e936458d0": 1,
+        "b60f399a7a7e41848b2be1eb49c79141": 1,
+        "2ee8eb13a0124a108e622ce40c0c25a8": 2,
+        "bcc8ca20dcc84ccfa139b07aa569efaf": 2
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "22pF",
+          2,
+          "C0805",
+          "C1,C2",
+          {
+            "Manufacturer Part": "0805N220J101CT",
+            "Manufacturer": "Walsin(华新科)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C296090"
+          }
+        ],
+        [
+          "100nF",
+          3,
+          "CAP-TH_BD2.2-L3.2-P5.08-D0.6",
+          "C3,C4,C6",
+          {
+            "Manufacturer Part": "ACC-B104K500P52",
+            "Manufacturer": "FH(风华)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C94703"
+          }
+        ],
+        [
+          "100uF",
+          1,
+          "CAP-TH_BD5.0-P2.00-D0.8-FD",
+          "C5",
+          {
+            "Manufacturer Part": "25YXA100MEFC5X11",
+            "Manufacturer": "rubycon(红宝石)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C338183"
+          }
+        ],
+        [
+          "1N4007",
+          4,
+          "DO-41_BD2.4-L4.7-P8.70-D0.9-RD",
+          "D1,D2,D3,D4",
+          {
+            "Manufacturer Part": "1N4007A",
+            "Manufacturer": "LRC(乐山无线电)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C5336145"
+          }
+        ],
+        [
+          "JK-SMD0805-050",
+          1,
+          "F0805",
+          "F1",
+          {
+            "Manufacturer Part": "JK-SMD0805-050",
+            "Manufacturer": "JK(金科)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C369150"
+          }
+        ],
+        [
+          "Header-Male-2.54_1x4",
+          12,
+          "HDR-TH_4P-P2.54-V-M",
+          "H1,H2,H12,H13,H14,H15,H22,H23,H24,H25,H27,H28",
+          {
+            "Manufacturer Part": "B-2100S04P-A110",
+            "Manufacturer": "Ckmtw(灿科盟)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C124378"
+          }
+        ],
+        [
+          "Header-Male-2.54_1x8",
+          7,
+          "HDR-TH_8P-P2.54-V-M",
+          "H3,H4,H8,H9,H20,H21,H26",
+          {
+            "Manufacturer Part": "B-2100S08P-A110",
+            "Manufacturer": "Ckmtw(灿科盟)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C124381"
+          }
+        ],
+        [
+          "Header-Male-2.54_2x5",
+          1,
+          "HDR-TH_10P-P2.54-V-M-R2-C5-S2.54",
+          "H5",
+          {
+            "Manufacturer Part": "2*5p排针 2.54mm",
+            "Manufacturer": "null",
+            "Supplier": "LCSC",
+            "Supplier Part": "C28207"
+          }
+        ],
+        [
+          "Female header 2.54-1*14P",
+          6,
+          "HDR-TH_14P-P2.54-V-F-1",
+          "H6,H7,H16,H17,H18,H19",
+          {
+            "Manufacturer Part": "2.54-1*14P母",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C52711"
+          }
+        ],
+        [
+          "Header-Male-2.54_1x10",
+          1,
+          "HDR-TH_10P-P2.54-V-M-1",
+          "H10",
+          {
+            "Manufacturer Part": "2.54-1*10P针",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C57369"
+          }
+        ],
+        [
+          "Header-Female-2.54_1x5",
+          1,
+          "HDR-TH_5P-P2.54-V-F",
+          "H11",
+          {
+            "Manufacturer Part": "2.54-1*5P母",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C50950"
+          }
+        ],
+        [
+          "330Ω",
+          2,
+          "L0805",
+          "L1,L2",
+          {
+            "Manufacturer Part": "CBG201209U301T",
+            "Manufacturer": "FH(风华)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C124101"
+          }
+        ],
+        [
+          "3ARB9HCB",
+          9,
+          "LED-TH_3P-BD3.0-P2.54-BI",
+          "LED1,LED2,LED3,LED4,LED5,LED6,LED7,LED8,LED9",
+          {
+            "Manufacturer Part": "3ARB9HCB",
+            "Manufacturer": "null",
+            "Supplier": "LCSC",
+            "Supplier Part": "C42016"
+          }
+        ],
+        [
+          "3ARB9HCB",
+          4,
+          "SENSOR-TH_BD4.0-P2.54-D0.5-A",
+          "LED10,LED11,LED12,LED13",
+          {
+            "Manufacturer Part": "3ARB9HCB",
+            "Manufacturer": "null",
+            "Supplier": "LCSC",
+            "Supplier Part": "C42016"
+          }
+        ],
+        [
+          "S8550-D",
+          2,
+          "TO-92-3_L4.9-W3.7-P1.27-R",
+          "Q1,Q2",
+          {
+            "Manufacturer Part": "S8550-D",
+            "Manufacturer": "BLUE ROCKET(蓝箭)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C305418"
+          }
+        ],
+        [
+          "S8050-C",
+          2,
+          "TO-92-3_L4.9-W3.7-P1.27-R",
+          "Q3,Q4",
+          {
+            "Manufacturer Part": "S8050-C",
+            "Manufacturer": "BLUE ROCKET(蓝箭)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C2844046"
+          }
+        ],
+        [
+          "1kΩ",
+          13,
+          "RES-TH_L3.0-W2.3-P2.54-D0.5",
+          "R1,R6,R7,R8,R10,R11,R12,R17,R18,R19,R20,R21,R22",
+          {
+            "Manufacturer Part": "TR0805B1K00P0525Z",
+            "Manufacturer": "EVER OHMS(天二科技)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C188361"
+          }
+        ],
+        [
+          "100",
+          4,
+          "RES-TH_L3.0-W2.3-P2.54-D0.5",
+          "R2,R3,R4,R5",
+          {
+            "Manufacturer Part": "Y145313K0000V9L",
+            "Manufacturer": "VISHAY(威世)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C1485186"
+          }
+        ],
+        [
+          "330",
+          4,
+          "RES-TH_L3.0-W2.3-P2.54-D0.5",
+          "R13,R14,R15,R16",
+          {
+            "Manufacturer Part": "TR0805B1K00P0525Z",
+            "Manufacturer": "EVER OHMS(天二科技)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C188361"
+          }
+        ],
+        [
+          "1kΩ",
+          1,
+          "R0805",
+          "R9",
+          {
+            "Manufacturer Part": "TR0805B1K00P0525Z",
+            "Manufacturer": "EVER OHMS(天二科技)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C188361"
+          }
+        ],
+        [
+          "ATMEGA8A-PU",
+          1,
+          "DIP-28_L34.6-W7.3-P2.54-LS10.2-BL",
+          "U1",
+          {
+            "Manufacturer Part": "ATMEGA8A-PU",
+            "Manufacturer": "MICROCHIP(美国微芯)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C34931"
+          }
+        ],
+        [
+          "SYD3642ASR",
+          1,
+          "LCD12-2.54-30.0X14.0X7.3MM",
+          "U2",
+          {
+            "Manufacturer Part": "SYD3642ASR",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "ULN2003AN",
+          1,
+          "DIP-16_16P-L20.2-W6.6-P2.54-LS7.6-BL",
+          "U7",
+          {
+            "Manufacturer Part": "ULN2003AN",
+            "Manufacturer": "TI(德州仪器)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C90448"
+          }
+        ],
+        [
+          "920-154A2021Y10104",
+          1,
+          "MICRO-USB-TH_MICRO-USB-A6",
+          "USB1",
+          {
+            "Manufacturer Part": "920-154A2021Y10104",
+            "Manufacturer": "精拓金",
+            "Supplier": "LCSC",
+            "Supplier Part": "C2763112"
+          }
+        ],
+        [
+          "16MHz",
+          1,
+          "OSC-TH_L10.0-W4.5-P5.00",
+          "X1",
+          {
+            "Manufacturer Part": "X49SD16MSD2SC",
+            "Manufacturer": "YXC(扬兴晶振)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C16212"
+          }
+        ]
+      ],
+      "updateTime": 1742802936,
+      "createTime": 1742043743,
+      "histories": [],
+      "created_at": "2025-03-15 21:02:23",
+      "updated_at": "2025-03-24 15:55:36"
+    }
+  ],
+  "sort": [
+    "05086d108c23d9b66ac2502523b50fea",
+    "c6cf37a08625894f8a3cc4352471c506",
+    "7cfc61578a2a2ed46c03834bcecae58f"
+  ],
+  "title": "PCB-IEDP",
+  "foldername": "PCB-IEDP",
+  "schfilename": "PCB-IEDP.json",
+  "schfilemtime": 1742737478482
+}

@@ -1,0 +1,595 @@
+
+003.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000294  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000012  00800060  00000294  00000308  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000031a  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000034c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000388  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000814  00000000  00000000  000003a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000005a2  00000000  00000000  00000bbc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003ea  00000000  00000000  0000115e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000034  00000000  00000000  00001548  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000340  00000000  00000000  0000157c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000043b  00000000  00000000  000018bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000028  00000000  00000000  00001cf7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	24 c0       	rjmp	.+72     	; 0x4c <__bad_interrupt>
+   4:	23 c0       	rjmp	.+70     	; 0x4c <__bad_interrupt>
+   6:	22 c0       	rjmp	.+68     	; 0x4c <__bad_interrupt>
+   8:	21 c0       	rjmp	.+66     	; 0x4c <__bad_interrupt>
+   a:	20 c0       	rjmp	.+64     	; 0x4c <__bad_interrupt>
+   c:	1f c0       	rjmp	.+62     	; 0x4c <__bad_interrupt>
+   e:	1e c0       	rjmp	.+60     	; 0x4c <__bad_interrupt>
+  10:	1d c0       	rjmp	.+58     	; 0x4c <__bad_interrupt>
+  12:	1c c0       	rjmp	.+56     	; 0x4c <__bad_interrupt>
+  14:	1b c0       	rjmp	.+54     	; 0x4c <__bad_interrupt>
+  16:	1a c0       	rjmp	.+52     	; 0x4c <__bad_interrupt>
+  18:	19 c0       	rjmp	.+50     	; 0x4c <__bad_interrupt>
+  1a:	18 c0       	rjmp	.+48     	; 0x4c <__bad_interrupt>
+  1c:	17 c0       	rjmp	.+46     	; 0x4c <__bad_interrupt>
+  1e:	16 c0       	rjmp	.+44     	; 0x4c <__bad_interrupt>
+  20:	15 c0       	rjmp	.+42     	; 0x4c <__bad_interrupt>
+  22:	14 c0       	rjmp	.+40     	; 0x4c <__bad_interrupt>
+  24:	13 c0       	rjmp	.+38     	; 0x4c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e4 e9       	ldi	r30, 0x94	; 148
+  3a:	f2 e0       	ldi	r31, 0x02	; 2
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a2 37       	cpi	r26, 0x72	; 114
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+  48:	02 d0       	rcall	.+4      	; 0x4e <main>
+  4a:	22 c1       	rjmp	.+580    	; 0x290 <_exit>
+
+0000004c <__bad_interrupt>:
+  4c:	d9 cf       	rjmp	.-78     	; 0x0 <__vectors>
+
+0000004e <main>:
+#include <avr/io.h>
+#define F_CPU 1000000UL
+#include <util/delay.h>
+int main(void)
+{ unsigned char
+  4e:	cf 93       	push	r28
+  50:	df 93       	push	r29
+  52:	cd b7       	in	r28, 0x3d	; 61
+  54:	de b7       	in	r29, 0x3e	; 62
+  56:	6b 97       	sbiw	r28, 0x1b	; 27
+  58:	0f b6       	in	r0, 0x3f	; 63
+  5a:	f8 94       	cli
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	0f be       	out	0x3f, r0	; 63
+  60:	cd bf       	out	0x3d, r28	; 61
+	seg7_hex[17]={0xfc,0x60,0xda,0xf2,0x66,0xb6,0xbe,0xe0,
+  62:	81 e1       	ldi	r24, 0x11	; 17
+  64:	e0 e6       	ldi	r30, 0x60	; 96
+  66:	f0 e0       	ldi	r31, 0x00	; 0
+  68:	de 01       	movw	r26, r28
+  6a:	11 96       	adiw	r26, 0x01	; 1
+  6c:	01 90       	ld	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	8a 95       	dec	r24
+  72:	e1 f7       	brne	.-8      	; 0x6c <main+0x1e>
+	0xfe,0xf6,0xee,0x3e,0x9c,0x7a,0x9e,0x8e,0x02};//4-7译码
+	unsigned char i,seg7_com[4]={0xe,0xd,0x0b,0x07};//扫描码
+  74:	8e e0       	ldi	r24, 0x0E	; 14
+  76:	8a 8b       	std	Y+18, r24	; 0x12
+  78:	8d e0       	ldi	r24, 0x0D	; 13
+  7a:	8b 8b       	std	Y+19, r24	; 0x13
+  7c:	8b e0       	ldi	r24, 0x0B	; 11
+  7e:	8c 8b       	std	Y+20, r24	; 0x14
+  80:	87 e0       	ldi	r24, 0x07	; 7
+  82:	8d 8b       	std	Y+21, r24	; 0x15
+	unsigned char seg7_no[4]={16,16,16,16};//要显示的4位数字
+  84:	80 e1       	ldi	r24, 0x10	; 16
+  86:	8e 8b       	std	Y+22, r24	; 0x16
+  88:	8f 8b       	std	Y+23, r24	; 0x17
+  8a:	88 8f       	std	Y+24, r24	; 0x18
+  8c:	89 8f       	std	Y+25, r24	; 0x19
+	unsigned char getkey,keyno;//取扫描输入，对按下按键的编码
+	DDRC = (0x0f);//PC3~0输出到公共端DIG1~4
+  8e:	9f e0       	ldi	r25, 0x0F	; 15
+  90:	94 bb       	out	0x14, r25	; 20
+	DDRB = (0xff);//PB7~0输出到a,b,...,g,dp段的正极
+  92:	8f ef       	ldi	r24, 0xFF	; 255
+  94:	87 bb       	out	0x17, r24	; 23
+	DDRD = (0x0f);//经PD3~0输出扫描码到行(R4~1)，从列(C4~1)输入到PD7~4
+  96:	91 bb       	out	0x11, r25	; 17
+	PORTD = (0xff);//PD7~4的内部上拉电阻启用,并PD3~0输出高电平
+  98:	82 bb       	out	0x12, r24	; 18
+	while (1)
+	{ /*按键阵列扫描，判断，编码*/
+		keyno = 16;//默认无按键按下
+		//1.扫描第1行
+		PORTD = ~(1<<PORTD0);//PORTD0为低电平，扫描第1行
+  9a:	7e ef       	ldi	r23, 0xFE	; 254
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+		switch(getkey)
+		{ case 0x0e:keyno = 0;break;//1行1列为S1
+			case 0x0d:keyno = 1;break;//1行2列为S2
+			case 0x0b:keyno = 2;break;//1行3列为S3
+  9c:	68 94       	set
+  9e:	22 24       	eor	r2, r2
+  a0:	21 f8       	bld	r2, 1
+	DDRB = (0xff);//PB7~0输出到a,b,...,g,dp段的正极
+	DDRD = (0x0f);//经PD3~0输出扫描码到行(R4~1)，从列(C4~1)输入到PD7~4
+	PORTD = (0xff);//PD7~4的内部上拉电阻启用,并PD3~0输出高电平
+	while (1)
+	{ /*按键阵列扫描，判断，编码*/
+		keyno = 16;//默认无按键按下
+  a2:	68 94       	set
+  a4:	33 24       	eor	r3, r3
+  a6:	34 f8       	bld	r3, 4
+		PORTD = ~(1<<PORTD0);//PORTD0为低电平，扫描第1行
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+		switch(getkey)
+		{ case 0x0e:keyno = 0;break;//1行1列为S1
+			case 0x0d:keyno = 1;break;//1行2列为S2
+  a8:	44 24       	eor	r4, r4
+  aa:	43 94       	inc	r4
+			case 0x0b:keyno = 2;break;//1行3列为S3
+			case 0x07:keyno = 3;break;//1行4列为S4
+  ac:	0f 2e       	mov	r0, r31
+  ae:	f3 e0       	ldi	r31, 0x03	; 3
+  b0:	5f 2e       	mov	r5, r31
+  b2:	f0 2d       	mov	r31, r0
+		}
+		//2.扫描第2行
+		PORTD = ~(1<<PORTD1);//PORTD1为低电平，扫描第2行
+  b4:	6d ef       	ldi	r22, 0xFD	; 253
+		switch(getkey)
+		{ case 0x0e:keyno = 4;break;
+			//2行1列为S5
+			case 0x0d:keyno = 5;break;
+			//2行2列为S6
+			case 0x0b:keyno = 6;break;
+  b6:	0f 2e       	mov	r0, r31
+  b8:	f6 e0       	ldi	r31, 0x06	; 6
+  ba:	6f 2e       	mov	r6, r31
+  bc:	f0 2d       	mov	r31, r0
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+		switch(getkey)
+		{ case 0x0e:keyno = 4;break;
+			//2行1列为S5
+			case 0x0d:keyno = 5;break;
+  be:	0f 2e       	mov	r0, r31
+  c0:	f5 e0       	ldi	r31, 0x05	; 5
+  c2:	7f 2e       	mov	r7, r31
+  c4:	f0 2d       	mov	r31, r0
+		//2.扫描第2行
+		PORTD = ~(1<<PORTD1);//PORTD1为低电平，扫描第2行
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+		switch(getkey)
+		{ case 0x0e:keyno = 4;break;
+  c6:	68 94       	set
+  c8:	88 24       	eor	r8, r8
+  ca:	82 f8       	bld	r8, 2
+			//2行1列为S5
+			case 0x0d:keyno = 5;break;
+			//2行2列为S6
+			case 0x0b:keyno = 6;break;
+			//2行3列为S7
+			case 0x07:keyno = 7;break;
+  cc:	0f 2e       	mov	r0, r31
+  ce:	f7 e0       	ldi	r31, 0x07	; 7
+  d0:	9f 2e       	mov	r9, r31
+  d2:	f0 2d       	mov	r31, r0
+			//2行4列为S8
+		}
+		//3.扫描第3行
+		PORTD = ~(1<<PORTD2);//扫描第3行
+  d4:	5b ef       	ldi	r21, 0xFB	; 251
+			case 0x0d:keyno = 9;break; //…为S10
+			case 0x0b:keyno = 10;break;//…为S11
+			case 0x07:keyno = 11;break;//…为S12
+		}
+		//4.扫描第4行
+		PORTD = ~(1<<PORTD3);//PORTD3为低电平，扫描第4行
+  d6:	47 ef       	ldi	r20, 0xF7	; 247
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+		switch(getkey)
+		{ case 0x0e:keyno =12;break;//4行1列为S13
+  d8:	0f 2e       	mov	r0, r31
+  da:	fc e0       	ldi	r31, 0x0C	; 12
+  dc:	af 2e       	mov	r10, r31
+  de:	f0 2d       	mov	r31, r0
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态
+		switch(getkey)
+		{ case 0x0e:keyno = 8;break;//3行1列为S9
+			case 0x0d:keyno = 9;break; //…为S10
+			case 0x0b:keyno = 10;break;//…为S11
+  e0:	0f 2e       	mov	r0, r31
+  e2:	fa e0       	ldi	r31, 0x0A	; 10
+  e4:	bf 2e       	mov	r11, r31
+  e6:	f0 2d       	mov	r31, r0
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+		switch(getkey)
+		{ case 0x0e:keyno =12;break;//4行1列为S13
+			case 0x0d:keyno =13;break;//4行2列为S14
+			case 0x0b:keyno =14;break;//4行3列为S15
+			case 0x07:keyno =15;break;//4行4列为S16
+  e8:	0f 2e       	mov	r0, r31
+  ea:	ff e0       	ldi	r31, 0x0F	; 15
+  ec:	cf 2e       	mov	r12, r31
+  ee:	f0 2d       	mov	r31, r0
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+		switch(getkey)
+		{ case 0x0e:keyno =12;break;//4行1列为S13
+			case 0x0d:keyno =13;break;//4行2列为S14
+			case 0x0b:keyno =14;break;//4行3列为S15
+  f0:	0f 2e       	mov	r0, r31
+  f2:	fe e0       	ldi	r31, 0x0E	; 14
+  f4:	df 2e       	mov	r13, r31
+  f6:	f0 2d       	mov	r31, r0
+		//3.扫描第3行
+		PORTD = ~(1<<PORTD2);//扫描第3行
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态
+		switch(getkey)
+		{ case 0x0e:keyno = 8;break;//3行1列为S9
+  f8:	08 e0       	ldi	r16, 0x08	; 8
+			case 0x0d:keyno = 9;break; //…为S10
+			case 0x0b:keyno = 10;break;//…为S11
+			case 0x07:keyno = 11;break;//…为S12
+  fa:	1b e0       	ldi	r17, 0x0B	; 11
+  fc:	9e 01       	movw	r18, r28
+  fe:	26 5e       	subi	r18, 0xE6	; 230
+ 100:	3f 4f       	sbci	r19, 0xFF	; 255
+	PORTD = (0xff);//PD7~4的内部上拉电阻启用,并PD3~0输出高电平
+	while (1)
+	{ /*按键阵列扫描，判断，编码*/
+		keyno = 16;//默认无按键按下
+		//1.扫描第1行
+		PORTD = ~(1<<PORTD0);//PORTD0为低电平，扫描第1行
+ 102:	72 bb       	out	0x12, r23	; 18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 104:	00 c0       	rjmp	.+0      	; 0x106 <main+0xb8>
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+ 106:	80 b3       	in	r24, 0x10	; 16
+		switch(getkey)
+ 108:	82 95       	swap	r24
+ 10a:	8f 70       	andi	r24, 0x0F	; 15
+ 10c:	8b 30       	cpi	r24, 0x0B	; 11
+ 10e:	61 f0       	breq	.+24     	; 0x128 <main+0xda>
+ 110:	18 f4       	brcc	.+6      	; 0x118 <main+0xca>
+ 112:	87 30       	cpi	r24, 0x07	; 7
+ 114:	59 f0       	breq	.+22     	; 0x12c <main+0xde>
+ 116:	0c c0       	rjmp	.+24     	; 0x130 <main+0xe2>
+ 118:	8d 30       	cpi	r24, 0x0D	; 13
+ 11a:	21 f0       	breq	.+8      	; 0x124 <main+0xd6>
+ 11c:	8e 30       	cpi	r24, 0x0E	; 14
+ 11e:	41 f4       	brne	.+16     	; 0x130 <main+0xe2>
+		{ case 0x0e:keyno = 0;break;//1行1列为S1
+ 120:	90 e0       	ldi	r25, 0x00	; 0
+ 122:	07 c0       	rjmp	.+14     	; 0x132 <main+0xe4>
+			case 0x0d:keyno = 1;break;//1行2列为S2
+ 124:	94 2d       	mov	r25, r4
+ 126:	05 c0       	rjmp	.+10     	; 0x132 <main+0xe4>
+			case 0x0b:keyno = 2;break;//1行3列为S3
+ 128:	92 2d       	mov	r25, r2
+ 12a:	03 c0       	rjmp	.+6      	; 0x132 <main+0xe4>
+			case 0x07:keyno = 3;break;//1行4列为S4
+ 12c:	95 2d       	mov	r25, r5
+ 12e:	01 c0       	rjmp	.+2      	; 0x132 <main+0xe4>
+	DDRB = (0xff);//PB7~0输出到a,b,...,g,dp段的正极
+	DDRD = (0x0f);//经PD3~0输出扫描码到行(R4~1)，从列(C4~1)输入到PD7~4
+	PORTD = (0xff);//PD7~4的内部上拉电阻启用,并PD3~0输出高电平
+	while (1)
+	{ /*按键阵列扫描，判断，编码*/
+		keyno = 16;//默认无按键按下
+ 130:	93 2d       	mov	r25, r3
+			case 0x0d:keyno = 1;break;//1行2列为S2
+			case 0x0b:keyno = 2;break;//1行3列为S3
+			case 0x07:keyno = 3;break;//1行4列为S4
+		}
+		//2.扫描第2行
+		PORTD = ~(1<<PORTD1);//PORTD1为低电平，扫描第2行
+ 132:	62 bb       	out	0x12, r22	; 18
+ 134:	00 c0       	rjmp	.+0      	; 0x136 <main+0xe8>
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+ 136:	80 b3       	in	r24, 0x10	; 16
+		switch(getkey)
+ 138:	82 95       	swap	r24
+ 13a:	8f 70       	andi	r24, 0x0F	; 15
+ 13c:	8b 30       	cpi	r24, 0x0B	; 11
+ 13e:	61 f0       	breq	.+24     	; 0x158 <main+0x10a>
+ 140:	18 f4       	brcc	.+6      	; 0x148 <main+0xfa>
+ 142:	87 30       	cpi	r24, 0x07	; 7
+ 144:	59 f0       	breq	.+22     	; 0x15c <main+0x10e>
+ 146:	0b c0       	rjmp	.+22     	; 0x15e <main+0x110>
+ 148:	8d 30       	cpi	r24, 0x0D	; 13
+ 14a:	21 f0       	breq	.+8      	; 0x154 <main+0x106>
+ 14c:	8e 30       	cpi	r24, 0x0E	; 14
+ 14e:	39 f4       	brne	.+14     	; 0x15e <main+0x110>
+		{ case 0x0e:keyno = 4;break;
+ 150:	98 2d       	mov	r25, r8
+ 152:	05 c0       	rjmp	.+10     	; 0x15e <main+0x110>
+			//2行1列为S5
+			case 0x0d:keyno = 5;break;
+ 154:	97 2d       	mov	r25, r7
+ 156:	03 c0       	rjmp	.+6      	; 0x15e <main+0x110>
+			//2行2列为S6
+			case 0x0b:keyno = 6;break;
+ 158:	96 2d       	mov	r25, r6
+ 15a:	01 c0       	rjmp	.+2      	; 0x15e <main+0x110>
+			//2行3列为S7
+			case 0x07:keyno = 7;break;
+ 15c:	99 2d       	mov	r25, r9
+			//2行4列为S8
+		}
+		//3.扫描第3行
+		PORTD = ~(1<<PORTD2);//扫描第3行
+ 15e:	52 bb       	out	0x12, r21	; 18
+ 160:	00 c0       	rjmp	.+0      	; 0x162 <main+0x114>
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态
+ 162:	80 b3       	in	r24, 0x10	; 16
+		switch(getkey)
+ 164:	82 95       	swap	r24
+ 166:	8f 70       	andi	r24, 0x0F	; 15
+ 168:	8b 30       	cpi	r24, 0x0B	; 11
+ 16a:	09 f4       	brne	.+2      	; 0x16e <main+0x120>
+ 16c:	72 c0       	rjmp	.+228    	; 0x252 <main+0x204>
+ 16e:	18 f4       	brcc	.+6      	; 0x176 <main+0x128>
+ 170:	87 30       	cpi	r24, 0x07	; 7
+ 172:	49 f0       	breq	.+18     	; 0x186 <main+0x138>
+ 174:	0a c0       	rjmp	.+20     	; 0x18a <main+0x13c>
+ 176:	8d 30       	cpi	r24, 0x0D	; 13
+ 178:	21 f0       	breq	.+8      	; 0x182 <main+0x134>
+ 17a:	8e 30       	cpi	r24, 0x0E	; 14
+ 17c:	09 f4       	brne	.+2      	; 0x180 <main+0x132>
+ 17e:	67 c0       	rjmp	.+206    	; 0x24e <main+0x200>
+ 180:	04 c0       	rjmp	.+8      	; 0x18a <main+0x13c>
+		{ case 0x0e:keyno = 8;break;//3行1列为S9
+			case 0x0d:keyno = 9;break; //…为S10
+ 182:	99 e0       	ldi	r25, 0x09	; 9
+ 184:	67 c0       	rjmp	.+206    	; 0x254 <main+0x206>
+			case 0x0b:keyno = 10;break;//…为S11
+			case 0x07:keyno = 11;break;//…为S12
+ 186:	91 2f       	mov	r25, r17
+ 188:	65 c0       	rjmp	.+202    	; 0x254 <main+0x206>
+		}
+		//4.扫描第4行
+		PORTD = ~(1<<PORTD3);//PORTD3为低电平，扫描第4行
+ 18a:	42 bb       	out	0x12, r20	; 18
+ 18c:	00 c0       	rjmp	.+0      	; 0x18e <main+0x140>
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+ 18e:	80 b3       	in	r24, 0x10	; 16
+		switch(getkey)
+ 190:	82 95       	swap	r24
+ 192:	8f 70       	andi	r24, 0x0F	; 15
+ 194:	8b 30       	cpi	r24, 0x0B	; 11
+ 196:	61 f0       	breq	.+24     	; 0x1b0 <main+0x162>
+ 198:	18 f4       	brcc	.+6      	; 0x1a0 <main+0x152>
+ 19a:	87 30       	cpi	r24, 0x07	; 7
+ 19c:	59 f0       	breq	.+22     	; 0x1b4 <main+0x166>
+ 19e:	0c c0       	rjmp	.+24     	; 0x1b8 <main+0x16a>
+ 1a0:	8d 30       	cpi	r24, 0x0D	; 13
+ 1a2:	21 f0       	breq	.+8      	; 0x1ac <main+0x15e>
+ 1a4:	8e 30       	cpi	r24, 0x0E	; 14
+ 1a6:	09 f4       	brne	.+2      	; 0x1aa <main+0x15c>
+ 1a8:	68 c0       	rjmp	.+208    	; 0x27a <main+0x22c>
+ 1aa:	06 c0       	rjmp	.+12     	; 0x1b8 <main+0x16a>
+		{ case 0x0e:keyno =12;break;//4行1列为S13
+			case 0x0d:keyno =13;break;//4行2列为S14
+ 1ac:	9d e0       	ldi	r25, 0x0D	; 13
+ 1ae:	07 c0       	rjmp	.+14     	; 0x1be <main+0x170>
+			case 0x0b:keyno =14;break;//4行3列为S15
+ 1b0:	9d 2d       	mov	r25, r13
+ 1b2:	05 c0       	rjmp	.+10     	; 0x1be <main+0x170>
+			case 0x07:keyno =15;break;//4行4列为S16
+ 1b4:	9c 2d       	mov	r25, r12
+ 1b6:	03 c0       	rjmp	.+6      	; 0x1be <main+0x170>
+		}
+		if(keyno<16) /*扫描一轮并编码后*/
+ 1b8:	90 31       	cpi	r25, 0x10	; 16
+ 1ba:	08 f0       	brcs	.+2      	; 0x1be <main+0x170>
+ 1bc:	62 c0       	rjmp	.+196    	; 0x282 <main+0x234>
+		{ seg7_no[3]=seg7_no[2]; //移动按键数据
+ 1be:	88 8d       	ldd	r24, Y+24	; 0x18
+ 1c0:	89 8f       	std	Y+25, r24	; 0x19
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1c2:	8f e9       	ldi	r24, 0x9F	; 159
+ 1c4:	a6 e8       	ldi	r26, 0x86	; 134
+ 1c6:	b1 e0       	ldi	r27, 0x01	; 1
+ 1c8:	81 50       	subi	r24, 0x01	; 1
+ 1ca:	a0 40       	sbci	r26, 0x00	; 0
+ 1cc:	b0 40       	sbci	r27, 0x00	; 0
+ 1ce:	e1 f7       	brne	.-8      	; 0x1c8 <main+0x17a>
+ 1d0:	00 c0       	rjmp	.+0      	; 0x1d2 <main+0x184>
+ 1d2:	00 00       	nop
+			_delay_ms(500);
+			seg7_no[2]=seg7_no[1];
+ 1d4:	8f 89       	ldd	r24, Y+23	; 0x17
+ 1d6:	88 8f       	std	Y+24, r24	; 0x18
+ 1d8:	ef e9       	ldi	r30, 0x9F	; 159
+ 1da:	f6 e8       	ldi	r31, 0x86	; 134
+ 1dc:	81 e0       	ldi	r24, 0x01	; 1
+ 1de:	e1 50       	subi	r30, 0x01	; 1
+ 1e0:	f0 40       	sbci	r31, 0x00	; 0
+ 1e2:	80 40       	sbci	r24, 0x00	; 0
+ 1e4:	e1 f7       	brne	.-8      	; 0x1de <main+0x190>
+ 1e6:	00 c0       	rjmp	.+0      	; 0x1e8 <main+0x19a>
+ 1e8:	00 00       	nop
+			_delay_ms(500);
+			seg7_no[1]=seg7_no[0];
+ 1ea:	8e 89       	ldd	r24, Y+22	; 0x16
+ 1ec:	8f 8b       	std	Y+23, r24	; 0x17
+ 1ee:	af e9       	ldi	r26, 0x9F	; 159
+ 1f0:	b6 e8       	ldi	r27, 0x86	; 134
+ 1f2:	e1 e0       	ldi	r30, 0x01	; 1
+ 1f4:	a1 50       	subi	r26, 0x01	; 1
+ 1f6:	b0 40       	sbci	r27, 0x00	; 0
+ 1f8:	e0 40       	sbci	r30, 0x00	; 0
+ 1fa:	e1 f7       	brne	.-8      	; 0x1f4 <main+0x1a6>
+ 1fc:	00 c0       	rjmp	.+0      	; 0x1fe <main+0x1b0>
+ 1fe:	00 00       	nop
+			_delay_ms(500);
+			seg7_no[0]=keyno; //新的按键数据
+ 200:	9e 8b       	std	Y+22, r25	; 0x16
+ 202:	ff e9       	ldi	r31, 0x9F	; 159
+ 204:	86 e8       	ldi	r24, 0x86	; 134
+ 206:	91 e0       	ldi	r25, 0x01	; 1
+ 208:	f1 50       	subi	r31, 0x01	; 1
+ 20a:	80 40       	sbci	r24, 0x00	; 0
+ 20c:	90 40       	sbci	r25, 0x00	; 0
+ 20e:	e1 f7       	brne	.-8      	; 0x208 <main+0x1ba>
+ 210:	00 c0       	rjmp	.+0      	; 0x212 <main+0x1c4>
+ 212:	00 00       	nop
+ 214:	36 c0       	rjmp	.+108    	; 0x282 <main+0x234>
+			_delay_ms(500);
+		}
+		/*4位七段数码管动态扫描显示*/
+		for(i=0;i<4;i++)
+		{
+			PORTC |= 0x0f; //禁止显示
+ 216:	85 b3       	in	r24, 0x15	; 21
+ 218:	8f 60       	ori	r24, 0x0F	; 15
+ 21a:	85 bb       	out	0x15, r24	; 21
+			PORTB = seg7_hex[seg7_no[i]];
+ 21c:	81 91       	ld	r24, Z+
+ 21e:	a1 e0       	ldi	r26, 0x01	; 1
+ 220:	b0 e0       	ldi	r27, 0x00	; 0
+ 222:	ac 0f       	add	r26, r28
+ 224:	bd 1f       	adc	r27, r29
+ 226:	a8 0f       	add	r26, r24
+ 228:	b1 1d       	adc	r27, r1
+ 22a:	8c 91       	ld	r24, X
+ 22c:	88 bb       	out	0x18, r24	; 24
+			PORTC = seg7_com[i]; //显示
+ 22e:	aa 8d       	ldd	r26, Y+26	; 0x1a
+ 230:	bb 8d       	ldd	r27, Y+27	; 0x1b
+ 232:	8d 91       	ld	r24, X+
+ 234:	bb 8f       	std	Y+27, r27	; 0x1b
+ 236:	aa 8f       	std	Y+26, r26	; 0x1a
+ 238:	85 bb       	out	0x15, r24	; 21
+ 23a:	89 ef       	ldi	r24, 0xF9	; 249
+ 23c:	90 e0       	ldi	r25, 0x00	; 0
+ 23e:	01 97       	sbiw	r24, 0x01	; 1
+ 240:	f1 f7       	brne	.-4      	; 0x23e <main+0x1f0>
+ 242:	00 c0       	rjmp	.+0      	; 0x244 <main+0x1f6>
+ 244:	00 00       	nop
+			_delay_ms(500);
+			seg7_no[0]=keyno; //新的按键数据
+			_delay_ms(500);
+		}
+		/*4位七段数码管动态扫描显示*/
+		for(i=0;i<4;i++)
+ 246:	e2 17       	cp	r30, r18
+ 248:	f3 07       	cpc	r31, r19
+ 24a:	29 f7       	brne	.-54     	; 0x216 <main+0x1c8>
+ 24c:	5a cf       	rjmp	.-332    	; 0x102 <main+0xb4>
+		//3.扫描第3行
+		PORTD = ~(1<<PORTD2);//扫描第3行
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态
+		switch(getkey)
+		{ case 0x0e:keyno = 8;break;//3行1列为S9
+ 24e:	90 2f       	mov	r25, r16
+ 250:	01 c0       	rjmp	.+2      	; 0x254 <main+0x206>
+			case 0x0d:keyno = 9;break; //…为S10
+			case 0x0b:keyno = 10;break;//…为S11
+ 252:	9b 2d       	mov	r25, r11
+			case 0x07:keyno = 11;break;//…为S12
+		}
+		//4.扫描第4行
+		PORTD = ~(1<<PORTD3);//PORTD3为低电平，扫描第4行
+ 254:	42 bb       	out	0x12, r20	; 18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 256:	00 c0       	rjmp	.+0      	; 0x258 <main+0x20a>
+		_delay_us(2);
+		getkey = (PIND & 0xf0)>>4;//获取列状态,并移动到低4位
+ 258:	80 b3       	in	r24, 0x10	; 16
+		switch(getkey)
+ 25a:	82 95       	swap	r24
+ 25c:	8f 70       	andi	r24, 0x0F	; 15
+ 25e:	8b 30       	cpi	r24, 0x0B	; 11
+ 260:	09 f4       	brne	.+2      	; 0x264 <main+0x216>
+ 262:	a6 cf       	rjmp	.-180    	; 0x1b0 <main+0x162>
+ 264:	20 f4       	brcc	.+8      	; 0x26e <main+0x220>
+ 266:	87 30       	cpi	r24, 0x07	; 7
+ 268:	09 f4       	brne	.+2      	; 0x26c <main+0x21e>
+ 26a:	a4 cf       	rjmp	.-184    	; 0x1b4 <main+0x166>
+ 26c:	a8 cf       	rjmp	.-176    	; 0x1be <main+0x170>
+ 26e:	8d 30       	cpi	r24, 0x0D	; 13
+ 270:	09 f4       	brne	.+2      	; 0x274 <main+0x226>
+ 272:	9c cf       	rjmp	.-200    	; 0x1ac <main+0x15e>
+ 274:	8e 30       	cpi	r24, 0x0E	; 14
+ 276:	19 f0       	breq	.+6      	; 0x27e <main+0x230>
+ 278:	a2 cf       	rjmp	.-188    	; 0x1be <main+0x170>
+		{ case 0x0e:keyno =12;break;//4行1列为S13
+ 27a:	9a 2d       	mov	r25, r10
+ 27c:	a0 cf       	rjmp	.-192    	; 0x1be <main+0x170>
+ 27e:	9a 2d       	mov	r25, r10
+ 280:	9e cf       	rjmp	.-196    	; 0x1be <main+0x170>
+ 282:	fe 01       	movw	r30, r28
+ 284:	76 96       	adiw	r30, 0x16	; 22
+ 286:	de 01       	movw	r26, r28
+ 288:	52 96       	adiw	r26, 0x12	; 18
+ 28a:	bb 8f       	std	Y+27, r27	; 0x1b
+ 28c:	aa 8f       	std	Y+26, r26	; 0x1a
+ 28e:	c3 cf       	rjmp	.-122    	; 0x216 <main+0x1c8>
+
+00000290 <_exit>:
+ 290:	f8 94       	cli
+
+00000292 <__stop_program>:
+ 292:	ff cf       	rjmp	.-2      	; 0x292 <__stop_program>

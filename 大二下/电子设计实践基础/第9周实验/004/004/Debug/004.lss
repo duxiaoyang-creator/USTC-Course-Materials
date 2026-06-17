@@ -1,0 +1,492 @@
+
+004.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000270  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000008  00800060  00000270  000002e4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000002ec  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000031c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000098  00000000  00000000  00000358  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000d93  00000000  00000000  000003f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000006e0  00000000  00000000  00001183  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000005b4  00000000  00000000  00001863  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000164  00000000  00000000  00001e18  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000412  00000000  00000000  00001f7c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000065c  00000000  00000000  0000238e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000088  00000000  00000000  000029ea  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	24 c0       	rjmp	.+72     	; 0x4c <__bad_interrupt>
+   4:	23 c0       	rjmp	.+70     	; 0x4c <__bad_interrupt>
+   6:	22 c0       	rjmp	.+68     	; 0x4c <__bad_interrupt>
+   8:	21 c0       	rjmp	.+66     	; 0x4c <__bad_interrupt>
+   a:	20 c0       	rjmp	.+64     	; 0x4c <__bad_interrupt>
+   c:	1f c0       	rjmp	.+62     	; 0x4c <__bad_interrupt>
+   e:	1e c0       	rjmp	.+60     	; 0x4c <__bad_interrupt>
+  10:	1d c0       	rjmp	.+58     	; 0x4c <__bad_interrupt>
+  12:	1c c0       	rjmp	.+56     	; 0x4c <__bad_interrupt>
+  14:	1b c0       	rjmp	.+54     	; 0x4c <__bad_interrupt>
+  16:	1a c0       	rjmp	.+52     	; 0x4c <__bad_interrupt>
+  18:	19 c0       	rjmp	.+50     	; 0x4c <__bad_interrupt>
+  1a:	18 c0       	rjmp	.+48     	; 0x4c <__bad_interrupt>
+  1c:	17 c0       	rjmp	.+46     	; 0x4c <__bad_interrupt>
+  1e:	16 c0       	rjmp	.+44     	; 0x4c <__bad_interrupt>
+  20:	15 c0       	rjmp	.+42     	; 0x4c <__bad_interrupt>
+  22:	14 c0       	rjmp	.+40     	; 0x4c <__bad_interrupt>
+  24:	13 c0       	rjmp	.+38     	; 0x4c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e0 e7       	ldi	r30, 0x70	; 112
+  3a:	f2 e0       	ldi	r31, 0x02	; 2
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a8 36       	cpi	r26, 0x68	; 104
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+  48:	b3 d0       	rcall	.+358    	; 0x1b0 <main>
+  4a:	10 c1       	rjmp	.+544    	; 0x26c <_exit>
+
+0000004c <__bad_interrupt>:
+  4c:	d9 cf       	rjmp	.-78     	; 0x0 <__vectors>
+
+0000004e <TWI_Init>:
+
+void LCD_Write_Char(unsigned char row,unsigned char col,char c_data)//在指定位置显示
+{ 
+    LCD_Set_Cursor_Location(row,col);
+    LCD_8Bit_Write(c_data,1);
+}
+  4e:	11 b8       	out	0x01, r1	; 1
+  50:	82 e0       	ldi	r24, 0x02	; 2
+  52:	80 b9       	out	0x00, r24	; 0
+  54:	84 e0       	ldi	r24, 0x04	; 4
+  56:	86 bf       	out	0x36, r24	; 54
+  58:	08 95       	ret
+
+0000005a <TWI_Start>:
+  5a:	84 ea       	ldi	r24, 0xA4	; 164
+  5c:	86 bf       	out	0x36, r24	; 54
+  5e:	06 b6       	in	r0, 0x36	; 54
+  60:	07 fe       	sbrs	r0, 7
+  62:	fd cf       	rjmp	.-6      	; 0x5e <TWI_Start+0x4>
+  64:	08 95       	ret
+
+00000066 <TWI_Write>:
+  66:	83 b9       	out	0x03, r24	; 3
+  68:	84 e8       	ldi	r24, 0x84	; 132
+  6a:	86 bf       	out	0x36, r24	; 54
+  6c:	06 b6       	in	r0, 0x36	; 54
+  6e:	07 fe       	sbrs	r0, 7
+  70:	fd cf       	rjmp	.-6      	; 0x6c <TWI_Write+0x6>
+  72:	08 95       	ret
+
+00000074 <TWI_Write_LCD>:
+  74:	cf 93       	push	r28
+  76:	c8 2f       	mov	r28, r24
+  78:	f0 df       	rcall	.-32     	; 0x5a <TWI_Start>
+  7a:	81 b1       	in	r24, 0x01	; 1
+  7c:	88 7f       	andi	r24, 0xF8	; 248
+  7e:	88 30       	cpi	r24, 0x08	; 8
+  80:	89 f4       	brne	.+34     	; 0xa4 <TWI_Write_LCD+0x30>
+  82:	8e e4       	ldi	r24, 0x4E	; 78
+  84:	f0 df       	rcall	.-32     	; 0x66 <TWI_Write>
+  86:	81 b1       	in	r24, 0x01	; 1
+  88:	88 7f       	andi	r24, 0xF8	; 248
+  8a:	88 31       	cpi	r24, 0x18	; 24
+  8c:	69 f4       	brne	.+26     	; 0xa8 <TWI_Write_LCD+0x34>
+  8e:	8c 2f       	mov	r24, r28
+  90:	88 60       	ori	r24, 0x08	; 8
+  92:	e9 df       	rcall	.-46     	; 0x66 <TWI_Write>
+  94:	81 b1       	in	r24, 0x01	; 1
+  96:	88 7f       	andi	r24, 0xF8	; 248
+  98:	88 32       	cpi	r24, 0x28	; 40
+  9a:	41 f4       	brne	.+16     	; 0xac <TWI_Write_LCD+0x38>
+  9c:	84 e9       	ldi	r24, 0x94	; 148
+  9e:	86 bf       	out	0x36, r24	; 54
+  a0:	81 e0       	ldi	r24, 0x01	; 1
+  a2:	05 c0       	rjmp	.+10     	; 0xae <TWI_Write_LCD+0x3a>
+  a4:	80 e0       	ldi	r24, 0x00	; 0
+  a6:	03 c0       	rjmp	.+6      	; 0xae <TWI_Write_LCD+0x3a>
+  a8:	80 e0       	ldi	r24, 0x00	; 0
+  aa:	01 c0       	rjmp	.+2      	; 0xae <TWI_Write_LCD+0x3a>
+  ac:	80 e0       	ldi	r24, 0x00	; 0
+  ae:	cf 91       	pop	r28
+  b0:	08 95       	ret
+
+000000b2 <LCD_4Bit_Write>:
+  b2:	cf 93       	push	r28
+  b4:	c8 2f       	mov	r28, r24
+  b6:	de df       	rcall	.-68     	; 0x74 <TWI_Write_LCD>
+  b8:	00 00       	nop
+  ba:	8c 2f       	mov	r24, r28
+  bc:	84 60       	ori	r24, 0x04	; 4
+  be:	da df       	rcall	.-76     	; 0x74 <TWI_Write_LCD>
+  c0:	00 00       	nop
+  c2:	8c 2f       	mov	r24, r28
+  c4:	8b 7f       	andi	r24, 0xFB	; 251
+  c6:	d6 df       	rcall	.-84     	; 0x74 <TWI_Write_LCD>
+  c8:	80 e1       	ldi	r24, 0x10	; 16
+  ca:	8a 95       	dec	r24
+  cc:	f1 f7       	brne	.-4      	; 0xca <LCD_4Bit_Write+0x18>
+  ce:	00 c0       	rjmp	.+0      	; 0xd0 <LCD_4Bit_Write+0x1e>
+  d0:	cf 91       	pop	r28
+  d2:	08 95       	ret
+
+000000d4 <LCD_8Bit_Write>:
+  d4:	cf 93       	push	r28
+  d6:	df 93       	push	r29
+  d8:	c8 2f       	mov	r28, r24
+  da:	d6 2f       	mov	r29, r22
+  dc:	80 7f       	andi	r24, 0xF0	; 240
+  de:	86 2b       	or	r24, r22
+  e0:	e8 df       	rcall	.-48     	; 0xb2 <LCD_4Bit_Write>
+  e2:	20 e1       	ldi	r18, 0x10	; 16
+  e4:	c2 9f       	mul	r28, r18
+  e6:	c0 01       	movw	r24, r0
+  e8:	11 24       	eor	r1, r1
+  ea:	8d 2b       	or	r24, r29
+  ec:	e2 df       	rcall	.-60     	; 0xb2 <LCD_4Bit_Write>
+  ee:	df 91       	pop	r29
+  f0:	cf 91       	pop	r28
+  f2:	08 95       	ret
+
+000000f4 <LCD_Init>:
+  f4:	83 ed       	ldi	r24, 0xD3	; 211
+  f6:	90 e3       	ldi	r25, 0x30	; 48
+  f8:	01 97       	sbiw	r24, 0x01	; 1
+  fa:	f1 f7       	brne	.-4      	; 0xf8 <LCD_Init+0x4>
+  fc:	00 c0       	rjmp	.+0      	; 0xfe <LCD_Init+0xa>
+  fe:	00 00       	nop
+ 100:	80 e3       	ldi	r24, 0x30	; 48
+ 102:	d7 df       	rcall	.-82     	; 0xb2 <LCD_4Bit_Write>
+ 104:	84 e6       	ldi	r24, 0x64	; 100
+ 106:	94 e0       	ldi	r25, 0x04	; 4
+ 108:	01 97       	sbiw	r24, 0x01	; 1
+ 10a:	f1 f7       	brne	.-4      	; 0x108 <LCD_Init+0x14>
+ 10c:	00 c0       	rjmp	.+0      	; 0x10e <LCD_Init+0x1a>
+ 10e:	00 00       	nop
+ 110:	80 e3       	ldi	r24, 0x30	; 48
+ 112:	cf df       	rcall	.-98     	; 0xb2 <LCD_4Bit_Write>
+ 114:	84 e6       	ldi	r24, 0x64	; 100
+ 116:	94 e0       	ldi	r25, 0x04	; 4
+ 118:	01 97       	sbiw	r24, 0x01	; 1
+ 11a:	f1 f7       	brne	.-4      	; 0x118 <LCD_Init+0x24>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <LCD_Init+0x2a>
+ 11e:	00 00       	nop
+ 120:	80 e3       	ldi	r24, 0x30	; 48
+ 122:	c7 df       	rcall	.-114    	; 0xb2 <LCD_4Bit_Write>
+ 124:	92 e3       	ldi	r25, 0x32	; 50
+ 126:	9a 95       	dec	r25
+ 128:	f1 f7       	brne	.-4      	; 0x126 <LCD_Init+0x32>
+ 12a:	80 e2       	ldi	r24, 0x20	; 32
+ 12c:	c2 df       	rcall	.-124    	; 0xb2 <LCD_4Bit_Write>
+ 12e:	60 e0       	ldi	r22, 0x00	; 0
+ 130:	88 e2       	ldi	r24, 0x28	; 40
+ 132:	d0 df       	rcall	.-96     	; 0xd4 <LCD_8Bit_Write>
+ 134:	60 e0       	ldi	r22, 0x00	; 0
+ 136:	8c e0       	ldi	r24, 0x0C	; 12
+ 138:	cd df       	rcall	.-102    	; 0xd4 <LCD_8Bit_Write>
+ 13a:	60 e0       	ldi	r22, 0x00	; 0
+ 13c:	81 e0       	ldi	r24, 0x01	; 1
+ 13e:	ca df       	rcall	.-108    	; 0xd4 <LCD_8Bit_Write>
+ 140:	83 ef       	ldi	r24, 0xF3	; 243
+ 142:	91 e0       	ldi	r25, 0x01	; 1
+ 144:	01 97       	sbiw	r24, 0x01	; 1
+ 146:	f1 f7       	brne	.-4      	; 0x144 <LCD_Init+0x50>
+ 148:	00 c0       	rjmp	.+0      	; 0x14a <LCD_Init+0x56>
+ 14a:	00 00       	nop
+ 14c:	60 e0       	ldi	r22, 0x00	; 0
+ 14e:	86 e0       	ldi	r24, 0x06	; 6
+ 150:	c1 df       	rcall	.-126    	; 0xd4 <LCD_8Bit_Write>
+ 152:	60 e0       	ldi	r22, 0x00	; 0
+ 154:	82 e0       	ldi	r24, 0x02	; 2
+ 156:	be df       	rcall	.-132    	; 0xd4 <LCD_8Bit_Write>
+ 158:	83 ef       	ldi	r24, 0xF3	; 243
+ 15a:	91 e0       	ldi	r25, 0x01	; 1
+ 15c:	01 97       	sbiw	r24, 0x01	; 1
+ 15e:	f1 f7       	brne	.-4      	; 0x15c <LCD_Init+0x68>
+ 160:	00 c0       	rjmp	.+0      	; 0x162 <LCD_Init+0x6e>
+ 162:	00 00       	nop
+ 164:	08 95       	ret
+
+00000166 <LCD_Set_Cursor_Location>:
+ 166:	cf 93       	push	r28
+ 168:	df 93       	push	r29
+ 16a:	00 d0       	rcall	.+0      	; 0x16c <LCD_Set_Cursor_Location+0x6>
+ 16c:	cd b7       	in	r28, 0x3d	; 61
+ 16e:	de b7       	in	r29, 0x3e	; 62
+ 170:	19 82       	std	Y+1, r1	; 0x01
+ 172:	90 e4       	ldi	r25, 0x40	; 64
+ 174:	9a 83       	std	Y+2, r25	; 0x02
+ 176:	fe 01       	movw	r30, r28
+ 178:	e8 0f       	add	r30, r24
+ 17a:	f1 1d       	adc	r31, r1
+ 17c:	81 81       	ldd	r24, Z+1	; 0x01
+ 17e:	86 0f       	add	r24, r22
+ 180:	60 e0       	ldi	r22, 0x00	; 0
+ 182:	80 68       	ori	r24, 0x80	; 128
+ 184:	a7 df       	rcall	.-178    	; 0xd4 <LCD_8Bit_Write>
+ 186:	0f 90       	pop	r0
+ 188:	0f 90       	pop	r0
+ 18a:	df 91       	pop	r29
+ 18c:	cf 91       	pop	r28
+ 18e:	08 95       	ret
+
+00000190 <LCD_Write_String>:
+
+void LCD_Write_String(unsigned char row,unsigned char col,const char *pStr)
+//在指定位置显示串
+{
+ 190:	cf 93       	push	r28
+ 192:	df 93       	push	r29
+ 194:	ea 01       	movw	r28, r20
+    LCD_Set_Cursor_Location(row,col);
+ 196:	e7 df       	rcall	.-50     	; 0x166 <LCD_Set_Cursor_Location>
+    while((*pStr) != '\0')
+ 198:	88 81       	ld	r24, Y
+ 19a:	88 23       	and	r24, r24
+ 19c:	31 f0       	breq	.+12     	; 0x1aa <LCD_Write_String+0x1a>
+ 19e:	21 96       	adiw	r28, 0x01	; 1
+    {
+        LCD_8Bit_Write(*pStr,1);
+ 1a0:	61 e0       	ldi	r22, 0x01	; 1
+ 1a2:	98 df       	rcall	.-208    	; 0xd4 <LCD_8Bit_Write>
+
+void LCD_Write_String(unsigned char row,unsigned char col,const char *pStr)
+//在指定位置显示串
+{
+    LCD_Set_Cursor_Location(row,col);
+    while((*pStr) != '\0')
+ 1a4:	89 91       	ld	r24, Y+
+ 1a6:	81 11       	cpse	r24, r1
+ 1a8:	fb cf       	rjmp	.-10     	; 0x1a0 <LCD_Write_String+0x10>
+    {
+        LCD_8Bit_Write(*pStr,1);
+        pStr ++;
+    }
+}
+ 1aa:	df 91       	pop	r29
+ 1ac:	cf 91       	pop	r28
+ 1ae:	08 95       	ret
+
+000001b0 <main>:
+#include <avr/io.h>
+#include "twi_lcd.h"
+#include <util/delay.h>
+#include <string.h> // 添加memset所需的头文件
+int main(void)
+{ 
+ 1b0:	cf 93       	push	r28
+ 1b2:	df 93       	push	r29
+ 1b4:	00 d0       	rcall	.+0      	; 0x1b6 <main+0x6>
+ 1b6:	00 d0       	rcall	.+0      	; 0x1b8 <main+0x8>
+ 1b8:	cd b7       	in	r28, 0x3d	; 61
+ 1ba:	de b7       	in	r29, 0x3e	; 62
+	 
+char tmp[4];                // 定义4字节数组（3位数字 + 终止符）
+memset(tmp, ' ', sizeof(tmp));  // 初始化为全空格
+ 1bc:	80 e2       	ldi	r24, 0x20	; 32
+ 1be:	90 e2       	ldi	r25, 0x20	; 32
+ 1c0:	9a 83       	std	Y+2, r25	; 0x02
+ 1c2:	89 83       	std	Y+1, r24	; 0x01
+ 1c4:	9c 83       	std	Y+4, r25	; 0x04
+ 1c6:	8b 83       	std	Y+3, r24	; 0x03
+tmp[3] = '\0';              // 终止符
+ 1c8:	1c 82       	std	Y+4, r1	; 0x04
+	
+	unsigned char i=0,tp_r=0; //临时变量
+	
+	
+	TCNT0 = 0; //利用TC0统计开关的次数
+ 1ca:	12 be       	out	0x32, r1	; 50
+	TCCR0 = (1<<CS02)|(1<<CS01)|(1<<CS00);
+ 1cc:	87 e0       	ldi	r24, 0x07	; 7
+ 1ce:	83 bf       	out	0x33, r24	; 51
+	//对T0上升沿计数
+	UCSRC = 0x80; //清空UCSRC
+ 1d0:	80 e8       	ldi	r24, 0x80	; 128
+ 1d2:	80 bd       	out	0x20, r24	; 32
+	UBRRH = 0;
+ 1d4:	10 bc       	out	0x20, r1	; 32
+	UBRRL = 12; //1MHz,4800bps,0.2%
+ 1d6:	8c e0       	ldi	r24, 0x0C	; 12
+ 1d8:	89 b9       	out	0x09, r24	; 9
+	UCSRB = (1<<RXEN)|(1<<TXEN);
+ 1da:	88 e1       	ldi	r24, 0x18	; 24
+ 1dc:	8a b9       	out	0x0a, r24	; 10
+	//开启USART接收和发送
+	UCSRC =(1<<URSEL)|(3<<UCSZ0);
+ 1de:	86 e8       	ldi	r24, 0x86	; 134
+ 1e0:	80 bd       	out	0x20, r24	; 32
+	//异步,无校验,8位数据，1位停止位,...
+	TWI_Init();
+ 1e2:	35 df       	rcall	.-406    	; 0x4e <TWI_Init>
+	LCD_Init();
+ 1e4:	87 df       	rcall	.-242    	; 0xf4 <LCD_Init>
+	LCD_Write_String(0,0,"b:Trans");
+ 1e6:	40 e6       	ldi	r20, 0x60	; 96
+ 1e8:	50 e0       	ldi	r21, 0x00	; 0
+ 1ea:	60 e0       	ldi	r22, 0x00	; 0
+ 1ec:	80 e0       	ldi	r24, 0x00	; 0
+ 1ee:	d0 df       	rcall	.-96     	; 0x190 <LCD_Write_String>
+				while(!(UCSRA & (1<<UDRE)));//等待
+				UDR = tmp[i]; //发送字符
+				i--;
+			}
+			while(i>0) //不足的位不显示
+			{ tmp[i--]=0x20; }
+ 1f0:	00 e2       	ldi	r16, 0x20	; 32
+	{ if(UCSRA & (1<<RXC)) //有收到数据
+		{ tp_r = UDR; //读数据
+			i=3; //1字节最多3位10进制数
+		  
+			while(tp_r>0) //转换成字符
+			{ tmp[i]=tp_r%10+0x30;
+ 1f2:	1d ec       	ldi	r17, 0xCD	; 205
+	//异步,无校验,8位数据，1位停止位,...
+	TWI_Init();
+	LCD_Init();
+	LCD_Write_String(0,0,"b:Trans");
+	while (1)
+	{ if(UCSRA & (1<<RXC)) //有收到数据
+ 1f4:	5f 9b       	sbis	0x0b, 7	; 11
+ 1f6:	33 c0       	rjmp	.+102    	; 0x25e <main+0xae>
+		{ tp_r = UDR; //读数据
+ 1f8:	8c b1       	in	r24, 0x0c	; 12
+			i=3; //1字节最多3位10进制数
+		  
+			while(tp_r>0) //转换成字符
+ 1fa:	88 23       	and	r24, r24
+ 1fc:	01 f1       	breq	.+64     	; 0x23e <main+0x8e>
+ 1fe:	23 e0       	ldi	r18, 0x03	; 3
+			{ tmp[i]=tp_r%10+0x30;
+ 200:	81 9f       	mul	r24, r17
+ 202:	91 2d       	mov	r25, r1
+ 204:	11 24       	eor	r1, r1
+ 206:	96 95       	lsr	r25
+ 208:	96 95       	lsr	r25
+ 20a:	96 95       	lsr	r25
+ 20c:	49 2f       	mov	r20, r25
+ 20e:	44 0f       	add	r20, r20
+ 210:	34 2f       	mov	r19, r20
+ 212:	33 0f       	add	r19, r19
+ 214:	33 0f       	add	r19, r19
+ 216:	34 0f       	add	r19, r20
+ 218:	83 1b       	sub	r24, r19
+ 21a:	30 e3       	ldi	r19, 0x30	; 48
+ 21c:	38 0f       	add	r19, r24
+ 21e:	e1 e0       	ldi	r30, 0x01	; 1
+ 220:	f0 e0       	ldi	r31, 0x00	; 0
+ 222:	ec 0f       	add	r30, r28
+ 224:	fd 1f       	adc	r31, r29
+ 226:	e2 0f       	add	r30, r18
+ 228:	f1 1d       	adc	r31, r1
+ 22a:	30 83       	st	Z, r19
+				tp_r = tp_r/10;
+ 22c:	89 2f       	mov	r24, r25
+				while(!(UCSRA & (1<<UDRE)));//等待
+ 22e:	5d 9b       	sbis	0x0b, 5	; 11
+ 230:	fe cf       	rjmp	.-4      	; 0x22e <main+0x7e>
+				UDR = tmp[i]; //发送字符
+ 232:	3c b9       	out	0x0c, r19	; 12
+				i--;
+ 234:	21 50       	subi	r18, 0x01	; 1
+	while (1)
+	{ if(UCSRA & (1<<RXC)) //有收到数据
+		{ tp_r = UDR; //读数据
+			i=3; //1字节最多3位10进制数
+		  
+			while(tp_r>0) //转换成字符
+ 236:	81 11       	cpse	r24, r1
+ 238:	e3 cf       	rjmp	.-58     	; 0x200 <main+0x50>
+				tp_r = tp_r/10;
+				while(!(UCSRA & (1<<UDRE)));//等待
+				UDR = tmp[i]; //发送字符
+				i--;
+			}
+			while(i>0) //不足的位不显示
+ 23a:	11 f4       	brne	.+4      	; 0x240 <main+0x90>
+ 23c:	0a c0       	rjmp	.+20     	; 0x252 <main+0xa2>
+	LCD_Init();
+	LCD_Write_String(0,0,"b:Trans");
+	while (1)
+	{ if(UCSRA & (1<<RXC)) //有收到数据
+		{ tp_r = UDR; //读数据
+			i=3; //1字节最多3位10进制数
+ 23e:	23 e0       	ldi	r18, 0x03	; 3
+				while(!(UCSRA & (1<<UDRE)));//等待
+				UDR = tmp[i]; //发送字符
+				i--;
+			}
+			while(i>0) //不足的位不显示
+			{ tmp[i--]=0x20; }
+ 240:	e1 e0       	ldi	r30, 0x01	; 1
+ 242:	f0 e0       	ldi	r31, 0x00	; 0
+ 244:	ec 0f       	add	r30, r28
+ 246:	fd 1f       	adc	r31, r29
+ 248:	e2 0f       	add	r30, r18
+ 24a:	f1 1d       	adc	r31, r1
+ 24c:	00 83       	st	Z, r16
+ 24e:	21 50       	subi	r18, 0x01	; 1
+				tp_r = tp_r/10;
+				while(!(UCSRA & (1<<UDRE)));//等待
+				UDR = tmp[i]; //发送字符
+				i--;
+			}
+			while(i>0) //不足的位不显示
+ 250:	b9 f7       	brne	.-18     	; 0x240 <main+0x90>
+			{ tmp[i--]=0x20; }
+			LCD_Write_String(1,0,tmp);
+ 252:	ae 01       	movw	r20, r28
+ 254:	4f 5f       	subi	r20, 0xFF	; 255
+ 256:	5f 4f       	sbci	r21, 0xFF	; 255
+ 258:	60 e0       	ldi	r22, 0x00	; 0
+ 25a:	81 e0       	ldi	r24, 0x01	; 1
+ 25c:	99 df       	rcall	.-206    	; 0x190 <LCD_Write_String>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 25e:	89 ef       	ldi	r24, 0xF9	; 249
+ 260:	90 e0       	ldi	r25, 0x00	; 0
+ 262:	01 97       	sbiw	r24, 0x01	; 1
+ 264:	f1 f7       	brne	.-4      	; 0x262 <main+0xb2>
+ 266:	00 c0       	rjmp	.+0      	; 0x268 <main+0xb8>
+ 268:	00 00       	nop
+ 26a:	c4 cf       	rjmp	.-120    	; 0x1f4 <main+0x44>
+
+0000026c <_exit>:
+ 26c:	f8 94       	cli
+
+0000026e <__stop_program>:
+ 26e:	ff cf       	rjmp	.-2      	; 0x26e <__stop_program>

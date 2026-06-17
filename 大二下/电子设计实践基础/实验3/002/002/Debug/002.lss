@@ -1,0 +1,264 @@
+
+002.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000010e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000182  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  00800060  00800060  00000182  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000182  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001b4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000a0  00000000  00000000  000001f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000d97  00000000  00000000  00000290  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000702  00000000  00000000  00001027  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000005f2  00000000  00000000  00001729  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000174  00000000  00000000  00001d1c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000042c  00000000  00000000  00001e90  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000006e3  00000000  00000000  000022bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000a8  00000000  00000000  0000299f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	35 c0       	rjmp	.+106    	; 0x6e <__vector_1>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a1 36       	cpi	r26, 0x61	; 97
+  3e:	b2 07       	cpc	r27, r18
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	26 d0       	rcall	.+76     	; 0x90 <main>
+  44:	62 c0       	rjmp	.+196    	; 0x10a <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <TWI_Init>:
+    while((*pStr) != '\0')
+    {
+        LCD_8Bit_Write(*pStr,1);
+        pStr ++;
+    }
+}
+  48:	11 b8       	out	0x01, r1	; 1
+  4a:	82 e0       	ldi	r24, 0x02	; 2
+  4c:	80 b9       	out	0x00, r24	; 0
+  4e:	84 e0       	ldi	r24, 0x04	; 4
+  50:	86 bf       	out	0x36, r24	; 54
+  52:	08 95       	ret
+
+00000054 <TWI_Start>:
+  54:	84 ea       	ldi	r24, 0xA4	; 164
+  56:	86 bf       	out	0x36, r24	; 54
+  58:	06 b6       	in	r0, 0x36	; 54
+  5a:	07 fe       	sbrs	r0, 7
+  5c:	fd cf       	rjmp	.-6      	; 0x58 <TWI_Start+0x4>
+  5e:	08 95       	ret
+
+00000060 <TWI_Write>:
+  60:	83 b9       	out	0x03, r24	; 3
+  62:	84 e8       	ldi	r24, 0x84	; 132
+  64:	86 bf       	out	0x36, r24	; 54
+  66:	06 b6       	in	r0, 0x36	; 54
+  68:	07 fe       	sbrs	r0, 7
+  6a:	fd cf       	rjmp	.-6      	; 0x66 <TWI_Write+0x6>
+  6c:	08 95       	ret
+
+0000006e <__vector_1>:
+unsigned char counter=0;
+#include <avr/io.h>
+#include <util/twi.h> // TWI接口状态码定义
+#include "twi_lcd.h"
+ISR(INT0_vect)
+{
+  6e:	1f 92       	push	r1
+  70:	0f 92       	push	r0
+  72:	0f b6       	in	r0, 0x3f	; 63
+  74:	0f 92       	push	r0
+  76:	11 24       	eor	r1, r1
+  78:	8f 93       	push	r24
+    if(counter <9999)
+    counter++;
+  7a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  7e:	8f 5f       	subi	r24, 0xFF	; 255
+  80:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+    else
+    counter = 0;
+}
+  84:	8f 91       	pop	r24
+  86:	0f 90       	pop	r0
+  88:	0f be       	out	0x3f, r0	; 63
+  8a:	0f 90       	pop	r0
+  8c:	1f 90       	pop	r1
+  8e:	18 95       	reti
+
+00000090 <main>:
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  90:	2f e3       	ldi	r18, 0x3F	; 63
+  92:	8d e0       	ldi	r24, 0x0D	; 13
+  94:	93 e0       	ldi	r25, 0x03	; 3
+  96:	21 50       	subi	r18, 0x01	; 1
+  98:	80 40       	sbci	r24, 0x00	; 0
+  9a:	90 40       	sbci	r25, 0x00	; 0
+  9c:	e1 f7       	brne	.-8      	; 0x96 <main+0x6>
+  9e:	00 c0       	rjmp	.+0      	; 0xa0 <main+0x10>
+  a0:	00 00       	nop
+
+int main(void)
+{
+    _delay_ms(100);  // 100ms 延时
+    unsigned char sla_w = 0x33<<1;//从MCU地址为0x33(位0为开启广播)，写从MCU
+    DDRC &= ~((1<<DDRC5)|(1<<DDRC4));//PC5/4为输入
+  a2:	84 b3       	in	r24, 0x14	; 20
+  a4:	8f 7c       	andi	r24, 0xCF	; 207
+  a6:	84 bb       	out	0x14, r24	; 20
+    PORTC |= (1<<PORTC5)|(1<<PORTC4);//开启内部上拉
+  a8:	85 b3       	in	r24, 0x15	; 21
+  aa:	80 63       	ori	r24, 0x30	; 48
+  ac:	85 bb       	out	0x15, r24	; 21
+    TWI_Init();
+  ae:	cc df       	rcall	.-104    	; 0x48 <TWI_Init>
+    DDRD &=~(1<<DDRD2);            //PD2(int0) 接触摸开关的sig管脚
+  b0:	8a 98       	cbi	0x11, 2	; 17
+    MCUCR|=((1<<ISC01)|(1<<ISC00));//int0管脚是上升沿触发中断INT0
+  b2:	85 b7       	in	r24, 0x35	; 53
+  b4:	83 60       	ori	r24, 0x03	; 3
+  b6:	85 bf       	out	0x35, r24	; 53
+    GICR |= (1<<INT0);            //允许INT0外部中断
+  b8:	8b b7       	in	r24, 0x3b	; 59
+  ba:	80 64       	ori	r24, 0x40	; 64
+  bc:	8b bf       	out	0x3b, r24	; 59
+    sei();                        //开启全局中断SREG(I)=1
+  be:	78 94       	sei
+    while (1) 
+    {
+        TWI_Start();
+        if((TWSR & 0xf8) == TW_START)//START已发出
+        {
+            TWDR=sla_w;//发送SLA+W
+  c0:	16 e6       	ldi	r17, 0x66	; 102
+            TWCR=(1<<TWINT)|(1<<TWEN);//清除标志，并发送sla+w
+  c2:	d4 e8       	ldi	r29, 0x84	; 132
+void TWI_Start(void) //发送Start信号，开始本次TWI通信
+{ TWCR = (1<<TWINT)|(1<<TWSTA)|(1<<TWEN);//发送Start信号
+	while(!(TWCR&(1<<TWINT)));
+	}
+	void TWI_Stop(void)//发送Stop信号，结束本次TWI通信
+	{TWCR=(1<<TWINT)|(1<<TWSTO)|(1<<TWEN);//发送Stop信号
+  c4:	04 e9       	ldi	r16, 0x94	; 148
+                TWI_Write(counter);
+                if((TWSR & 0xf8)==TW_MT_DATA_ACK)   //数据已发出
+                TWI_Stop();//清标志，发STOP
+            }
+        }
+        TWCR=(1<<TWINT);//清除标志位，禁止TWI
+  c6:	c0 e8       	ldi	r28, 0x80	; 128
+    MCUCR|=((1<<ISC01)|(1<<ISC00));//int0管脚是上升沿触发中断INT0
+    GICR |= (1<<INT0);            //允许INT0外部中断
+    sei();                        //开启全局中断SREG(I)=1
+    while (1) 
+    {
+        TWI_Start();
+  c8:	c5 df       	rcall	.-118    	; 0x54 <TWI_Start>
+        if((TWSR & 0xf8) == TW_START)//START已发出
+  ca:	81 b1       	in	r24, 0x01	; 1
+  cc:	88 7f       	andi	r24, 0xF8	; 248
+  ce:	88 30       	cpi	r24, 0x08	; 8
+  d0:	89 f4       	brne	.+34     	; 0xf4 <main+0x64>
+        {
+            TWDR=sla_w;//发送SLA+W
+  d2:	13 b9       	out	0x03, r17	; 3
+            TWCR=(1<<TWINT)|(1<<TWEN);//清除标志，并发送sla+w
+  d4:	d6 bf       	out	0x36, r29	; 54
+            while(!(TWCR & (1<<TWINT)));//等待sla+w发出
+  d6:	06 b6       	in	r0, 0x36	; 54
+  d8:	07 fe       	sbrs	r0, 7
+  da:	fd cf       	rjmp	.-6      	; 0xd6 <main+0x46>
+            if((TWSR & 0xf8)==TW_MT_SLA_ACK)//sla+W已发出
+  dc:	81 b1       	in	r24, 0x01	; 1
+  de:	88 7f       	andi	r24, 0xF8	; 248
+  e0:	88 31       	cpi	r24, 0x18	; 24
+  e2:	41 f4       	brne	.+16     	; 0xf4 <main+0x64>
+            {
+                TWI_Write(counter);
+  e4:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  e8:	bb df       	rcall	.-138    	; 0x60 <TWI_Write>
+                if((TWSR & 0xf8)==TW_MT_DATA_ACK)   //数据已发出
+  ea:	81 b1       	in	r24, 0x01	; 1
+  ec:	88 7f       	andi	r24, 0xF8	; 248
+  ee:	88 32       	cpi	r24, 0x28	; 40
+  f0:	09 f4       	brne	.+2      	; 0xf4 <main+0x64>
+  f2:	06 bf       	out	0x36, r16	; 54
+                TWI_Stop();//清标志，发STOP
+            }
+        }
+        TWCR=(1<<TWINT);//清除标志位，禁止TWI
+  f4:	c6 bf       	out	0x36, r28	; 54
+  f6:	2f e9       	ldi	r18, 0x9F	; 159
+  f8:	86 e8       	ldi	r24, 0x86	; 134
+  fa:	91 e0       	ldi	r25, 0x01	; 1
+  fc:	21 50       	subi	r18, 0x01	; 1
+  fe:	80 40       	sbci	r24, 0x00	; 0
+ 100:	90 40       	sbci	r25, 0x00	; 0
+ 102:	e1 f7       	brne	.-8      	; 0xfc <main+0x6c>
+ 104:	00 c0       	rjmp	.+0      	; 0x106 <main+0x76>
+ 106:	00 00       	nop
+ 108:	df cf       	rjmp	.-66     	; 0xc8 <main+0x38>
+
+0000010a <_exit>:
+ 10a:	f8 94       	cli
+
+0000010c <__stop_program>:
+ 10c:	ff cf       	rjmp	.-2      	; 0x10c <__stop_program>

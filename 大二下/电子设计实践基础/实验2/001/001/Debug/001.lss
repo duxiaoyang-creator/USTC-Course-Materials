@@ -1,0 +1,198 @@
+
+001.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000e4  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000010  00800060  000000e4  00000178  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  00800070  00800070  00000188  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000188  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001b8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  000001f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000566  00000000  00000000  0000021c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000004f0  00000000  00000000  00000782  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000204  00000000  00000000  00000c72  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000054  00000000  00000000  00000e78  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000002c1  00000000  00000000  00000ecc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000083  00000000  00000000  0000118d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  00001210  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	57 c0       	rjmp	.+174    	; 0xb4 <__vector_2>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e4 ee       	ldi	r30, 0xE4	; 228
+  3a:	f0 e0       	ldi	r31, 0x00	; 0
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a0 37       	cpi	r26, 0x70	; 112
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	a0 e7       	ldi	r26, 0x70	; 112
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	a1 37       	cpi	r26, 0x71	; 113
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	02 d0       	rcall	.+4      	; 0x5e <main>
+  5a:	42 c0       	rjmp	.+132    	; 0xe0 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <main>:
+#include <avr/interrupt.h>
+
+unsigned char counter = 0; // 次数
+
+int main(void)
+{
+  5e:	cf 93       	push	r28
+  60:	df 93       	push	r29
+  62:	cd b7       	in	r28, 0x3d	; 61
+  64:	de b7       	in	r29, 0x3e	; 62
+  66:	60 97       	sbiw	r28, 0x10	; 16
+  68:	0f b6       	in	r0, 0x3f	; 63
+  6a:	f8 94       	cli
+  6c:	de bf       	out	0x3e, r29	; 62
+  6e:	0f be       	out	0x3f, r0	; 63
+  70:	cd bf       	out	0x3d, r28	; 61
+	unsigned char seg7_hex[16] =
+  72:	80 e1       	ldi	r24, 0x10	; 16
+  74:	e0 e6       	ldi	r30, 0x60	; 96
+  76:	f0 e0       	ldi	r31, 0x00	; 0
+  78:	de 01       	movw	r26, r28
+  7a:	11 96       	adiw	r26, 0x01	; 1
+  7c:	01 90       	ld	r0, Z+
+  7e:	0d 92       	st	X+, r0
+  80:	8a 95       	dec	r24
+  82:	e1 f7       	brne	.-8      	; 0x7c <main+0x1e>
+	{0xfc, 0x60, 0xda, 0xf2, 0x66, 0xb6, 0xbe, 0xe0,
+	0xfe, 0xf6, 0xee, 0x3e, 0x9c, 0x7a, 0x9e, 0x8e}; // MSB-a,b,…,dp-LSB
+
+	DDRB = 0xff; // PB7~0为输出，分别控制七段数码管的a~g,dp
+  84:	8f ef       	ldi	r24, 0xFF	; 255
+  86:	87 bb       	out	0x17, r24	; 23
+	DDRC = 0x01; // PC0为输出，控制数码管的共阴极管脚(如DIG1等)
+  88:	81 e0       	ldi	r24, 0x01	; 1
+  8a:	84 bb       	out	0x14, r24	; 20
+	PORTC = 0x00; // PC0输出低电平‘0’
+  8c:	15 ba       	out	0x15, r1	; 21
+	
+	// 配置INT1中断
+	DDRD &= ~(1 << DDD3); // PD3 (INT1) 为输入（从tp223触摸开关）
+  8e:	8b 98       	cbi	0x11, 3	; 17
+	MCUCR |= (1 << ISC11) | (1 << ISC10); // INT1 上升沿触发中断
+  90:	85 b7       	in	r24, 0x35	; 53
+  92:	8c 60       	ori	r24, 0x0C	; 12
+  94:	85 bf       	out	0x35, r24	; 53
+	GICR |= (1 << INT1); // 开启 INT1 中断
+  96:	8b b7       	in	r24, 0x3b	; 59
+  98:	80 68       	ori	r24, 0x80	; 128
+  9a:	8b bf       	out	0x3b, r24	; 59
+	sei(); // 开启全局中断 SREG (I)
+  9c:	78 94       	sei
+
+	while (1)
+	{
+		PORTB = seg7_hex[counter]; // 更新数码管显示
+  9e:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <__data_end>
+  a2:	e1 e0       	ldi	r30, 0x01	; 1
+  a4:	f0 e0       	ldi	r31, 0x00	; 0
+  a6:	ec 0f       	add	r30, r28
+  a8:	fd 1f       	adc	r31, r29
+  aa:	e8 0f       	add	r30, r24
+  ac:	f1 1d       	adc	r31, r1
+  ae:	80 81       	ld	r24, Z
+  b0:	88 bb       	out	0x18, r24	; 24
+  b2:	f5 cf       	rjmp	.-22     	; 0x9e <main+0x40>
+
+000000b4 <__vector_2>:
+	}
+} // main函数结束
+
+ISR(INT1_vect) // INT1中断向量
+{
+  b4:	1f 92       	push	r1
+  b6:	0f 92       	push	r0
+  b8:	0f b6       	in	r0, 0x3f	; 63
+  ba:	0f 92       	push	r0
+  bc:	11 24       	eor	r1, r1
+  be:	8f 93       	push	r24
+	if (counter < 4)
+  c0:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <__data_end>
+  c4:	84 30       	cpi	r24, 0x04	; 4
+  c6:	20 f4       	brcc	.+8      	; 0xd0 <__vector_2+0x1c>
+	counter++; // 增加计数
+  c8:	8f 5f       	subi	r24, 0xFF	; 255
+  ca:	80 93 70 00 	sts	0x0070, r24	; 0x800070 <__data_end>
+  ce:	02 c0       	rjmp	.+4      	; 0xd4 <__vector_2+0x20>
+	else
+	counter = 0; // 重置计数
+  d0:	10 92 70 00 	sts	0x0070, r1	; 0x800070 <__data_end>
+}
+  d4:	8f 91       	pop	r24
+  d6:	0f 90       	pop	r0
+  d8:	0f be       	out	0x3f, r0	; 63
+  da:	0f 90       	pop	r0
+  dc:	1f 90       	pop	r1
+  de:	18 95       	reti
+
+000000e0 <_exit>:
+  e0:	f8 94       	cli
+
+000000e2 <__stop_program>:
+  e2:	ff cf       	rjmp	.-2      	; 0xe2 <__stop_program>

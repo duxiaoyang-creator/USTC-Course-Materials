@@ -1,0 +1,230 @@
+
+005.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000fa  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000018  00800060  000000fa  0000018e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  00800078  00800078  000001a6  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000001a6  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001d8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  00000214  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000069b  00000000  00000000  0000023c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000005b0  00000000  00000000  000008d7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000002c1  00000000  00000000  00000e87  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  0000003c  00000000  00000000  00001148  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000320  00000000  00000000  00001184  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000129  00000000  00000000  000014a4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  000015cd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	ea ef       	ldi	r30, 0xFA	; 250
+  3a:	f0 e0       	ldi	r31, 0x00	; 0
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a8 37       	cpi	r26, 0x78	; 120
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	a8 e7       	ldi	r26, 0x78	; 120
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	a9 37       	cpi	r26, 0x79	; 121
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	3e d0       	rcall	.+124    	; 0xd6 <main>
+  5a:	4d c0       	rjmp	.+154    	; 0xf6 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <run_stepper>:
+/* 28BYJ-48步进电机的控制函数，其参数的作用为：
+* phase:选择步进电机的驱动方式，0：8拍，1：双4拍，2：单4拍
+* dir:步进电机的转动方向，0：顺时针，1：逆时针
+* step:控制步进电机转动多少步（多少个脉冲），0~65535*/
+void run_stepper(unsigned char phase,unsigned char dir,unsigned int step)
+{ unsigned char ph = phase ? 0x03:0x07; //驱动方式，确定脉冲的选择增量
+  5e:	cf 93       	push	r28
+  60:	da 01       	movw	r26, r20
+  62:	81 11       	cpse	r24, r1
+  64:	02 c0       	rjmp	.+4      	; 0x6a <run_stepper+0xc>
+  66:	47 e0       	ldi	r20, 0x07	; 7
+  68:	01 c0       	rjmp	.+2      	; 0x6c <run_stepper+0xe>
+  6a:	43 e0       	ldi	r20, 0x03	; 3
+	unsigned char inc = dir ?0x01:ph; /*逆时针增量为1，顺时针 4拍为3,8拍为7*/
+  6c:	61 11       	cpse	r22, r1
+  6e:	02 c0       	rjmp	.+4      	; 0x74 <run_stepper+0x16>
+  70:	c4 2f       	mov	r28, r20
+  72:	01 c0       	rjmp	.+2      	; 0x76 <run_stepper+0x18>
+  74:	c1 e0       	ldi	r28, 0x01	; 1
+	unsigned int i; //定义循环变量i
+	DDRC |=(1<<DDRC3)|(1<<DDRC2)|(1<<DDRC1)|(1<<DDRC0);//PC输出
+  76:	94 b3       	in	r25, 0x14	; 20
+  78:	9f 60       	ori	r25, 0x0F	; 15
+  7a:	94 bb       	out	0x14, r25	; 20
+	for(i=0;i<step;i++) //输出step个脉冲步
+  7c:	10 97       	sbiw	r26, 0x00	; 0
+  7e:	49 f1       	breq	.+82     	; 0xd2 <run_stepper+0x74>
+  80:	20 e0       	ldi	r18, 0x00	; 0
+  82:	30 e0       	ldi	r19, 0x00	; 0
+	{ stepper_index += inc; //通过增量调整，不断地切换输出脉冲
+		stepper_index &= ph; //去掉递增后的无效高位值
+		PORTC &=0xf0; //选择相应的控制脉冲通过端口C进行输出
+		PORTC |= stepper_ph[phase][stepper_index];
+  84:	68 2f       	mov	r22, r24
+  86:	70 e0       	ldi	r23, 0x00	; 0
+  88:	66 0f       	add	r22, r22
+  8a:	77 1f       	adc	r23, r23
+  8c:	66 0f       	add	r22, r22
+  8e:	77 1f       	adc	r23, r23
+  90:	66 0f       	add	r22, r22
+  92:	77 1f       	adc	r23, r23
+  94:	60 5a       	subi	r22, 0xA0	; 160
+  96:	7f 4f       	sbci	r23, 0xFF	; 255
+	unsigned char inc = dir ?0x01:ph; /*逆时针增量为1，顺时针 4拍为3,8拍为7*/
+	unsigned int i; //定义循环变量i
+	DDRC |=(1<<DDRC3)|(1<<DDRC2)|(1<<DDRC1)|(1<<DDRC0);//PC输出
+	for(i=0;i<step;i++) //输出step个脉冲步
+	{ stepper_index += inc; //通过增量调整，不断地切换输出脉冲
+		stepper_index &= ph; //去掉递增后的无效高位值
+  98:	90 91 78 00 	lds	r25, 0x0078	; 0x800078 <__data_end>
+  9c:	9c 0f       	add	r25, r28
+  9e:	94 23       	and	r25, r20
+  a0:	90 93 78 00 	sts	0x0078, r25	; 0x800078 <__data_end>
+		PORTC &=0xf0; //选择相应的控制脉冲通过端口C进行输出
+  a4:	95 b3       	in	r25, 0x15	; 21
+  a6:	90 7f       	andi	r25, 0xF0	; 240
+  a8:	95 bb       	out	0x15, r25	; 21
+		PORTC |= stepper_ph[phase][stepper_index];
+  aa:	55 b3       	in	r21, 0x15	; 21
+  ac:	90 91 78 00 	lds	r25, 0x0078	; 0x800078 <__data_end>
+  b0:	fb 01       	movw	r30, r22
+  b2:	e9 0f       	add	r30, r25
+  b4:	f1 1d       	adc	r31, r1
+  b6:	90 81       	ld	r25, Z
+  b8:	95 2b       	or	r25, r21
+  ba:	95 bb       	out	0x15, r25	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  bc:	80 ee       	ldi	r24, 0xE0	; 224
+  be:	90 e0       	ldi	r25, 0x00	; 0
+  c0:	01 97       	sbiw	r24, 0x01	; 1
+  c2:	f1 f7       	brne	.-4      	; 0xc0 <run_stepper+0x62>
+  c4:	00 c0       	rjmp	.+0      	; 0xc6 <run_stepper+0x68>
+  c6:	00 00       	nop
+void run_stepper(unsigned char phase,unsigned char dir,unsigned int step)
+{ unsigned char ph = phase ? 0x03:0x07; //驱动方式，确定脉冲的选择增量
+	unsigned char inc = dir ?0x01:ph; /*逆时针增量为1，顺时针 4拍为3,8拍为7*/
+	unsigned int i; //定义循环变量i
+	DDRC |=(1<<DDRC3)|(1<<DDRC2)|(1<<DDRC1)|(1<<DDRC0);//PC输出
+	for(i=0;i<step;i++) //输出step个脉冲步
+  c8:	2f 5f       	subi	r18, 0xFF	; 255
+  ca:	3f 4f       	sbci	r19, 0xFF	; 255
+  cc:	a2 17       	cp	r26, r18
+  ce:	b3 07       	cpc	r27, r19
+  d0:	19 f7       	brne	.-58     	; 0x98 <run_stepper+0x3a>
+	{ stepper_index += inc; //通过增量调整，不断地切换输出脉冲
+		stepper_index &= ph; //去掉递增后的无效高位值
+		PORTC &=0xf0; //选择相应的控制脉冲通过端口C进行输出
+		PORTC |= stepper_ph[phase][stepper_index];
+		_delay_us(900);//8拍 _delay_us(1600);//双4拍//_delay_us(2000);//单四拍
+	} }
+  d2:	cf 91       	pop	r28
+  d4:	08 95       	ret
+
+000000d6 <main>:
+ */ 
+
+#include <avr/io.h>
+#include "m_28byj48.h"
+int main(void)
+{ DDRD &=~(1<<DDRD0); //输入：通过PD0控制电机正反转
+  d6:	88 98       	cbi	0x11, 0	; 17
+	PORTD |=(1<<PORTD0); //内部上拉
+  d8:	90 9a       	sbi	0x12, 0	; 18
+	while (1)
+	{ if(PIND & (1<<PIND0))
+  da:	80 9b       	sbis	0x10, 0	; 16
+  dc:	06 c0       	rjmp	.+12     	; 0xea <main+0x14>
+		run_stepper(0,1,4096);
+  de:	40 e0       	ldi	r20, 0x00	; 0
+  e0:	50 e1       	ldi	r21, 0x10	; 16
+  e2:	61 e0       	ldi	r22, 0x01	; 1
+  e4:	80 e0       	ldi	r24, 0x00	; 0
+  e6:	bb df       	rcall	.-138    	; 0x5e <run_stepper>
+  e8:	f8 cf       	rjmp	.-16     	; 0xda <main+0x4>
+		//8拍驱动方式，顺时针，转动一周
+		else
+		run_stepper(0,0,4096);
+  ea:	40 e0       	ldi	r20, 0x00	; 0
+  ec:	50 e1       	ldi	r21, 0x10	; 16
+  ee:	60 e0       	ldi	r22, 0x00	; 0
+  f0:	80 e0       	ldi	r24, 0x00	; 0
+  f2:	b5 df       	rcall	.-150    	; 0x5e <run_stepper>
+  f4:	f2 cf       	rjmp	.-28     	; 0xda <main+0x4>
+
+000000f6 <_exit>:
+  f6:	f8 94       	cli
+
+000000f8 <__stop_program>:
+  f8:	ff cf       	rjmp	.-2      	; 0xf8 <__stop_program>

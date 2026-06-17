@@ -1,0 +1,124 @@
+
+001.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000074  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000000c8  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000000c8  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000000f8  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  00000134  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000052a  00000000  00000000  0000015c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000004bc  00000000  00000000  00000686  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000001e4  00000000  00000000  00000b42  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000048  00000000  00000000  00000d28  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002a7  00000000  00000000  00000d70  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000049  00000000  00000000  00001017  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  00001060  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
+   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
+   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
+   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
+   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
+   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
+   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
+  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
+  12:	12 c0       	rjmp	.+36     	; 0x38 <__vector_9>
+  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
+  16:	0f c0       	rjmp	.+30     	; 0x36 <__bad_interrupt>
+  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
+  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
+  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
+  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
+  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
+  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
+  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+  32:	14 d0       	rcall	.+40     	; 0x5c <main>
+  34:	1d c0       	rjmp	.+58     	; 0x70 <_exit>
+
+00000036 <__bad_interrupt>:
+  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+
+00000038 <__vector_9>:
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+// 添加中断服务程序声明
+ISR(TIMER0_OVF_vect)
+{
+  38:	1f 92       	push	r1
+  3a:	0f 92       	push	r0
+  3c:	0f b6       	in	r0, 0x3f	; 63
+  3e:	0f 92       	push	r0
+  40:	11 24       	eor	r1, r1
+  42:	8f 93       	push	r24
+  44:	9f 93       	push	r25
+	PORTC ^= (1 << PORTC0); // LED状态切换
+  46:	95 b3       	in	r25, 0x15	; 21
+  48:	81 e0       	ldi	r24, 0x01	; 1
+  4a:	89 27       	eor	r24, r25
+  4c:	85 bb       	out	0x15, r24	; 21
+}
+  4e:	9f 91       	pop	r25
+  50:	8f 91       	pop	r24
+  52:	0f 90       	pop	r0
+  54:	0f be       	out	0x3f, r0	; 63
+  56:	0f 90       	pop	r0
+  58:	1f 90       	pop	r1
+  5a:	18 95       	reti
+
+0000005c <main>:
+
+int main(void)
+{
+	DDRC |= (1 << DDC0);    // 正确设置PC0为输出(使用DDC0而不是DDRC0)
+  5c:	a0 9a       	sbi	0x14, 0	; 20
+	PORTC &= ~(1 << PORTC0); // 初始化为低电平
+  5e:	a8 98       	cbi	0x15, 0	; 21
+	
+	TCNT0 = 0;              // 计数器从0开始
+  60:	12 be       	out	0x32, r1	; 50
+	TIMSK |= (1 << TOIE0);  // 允许定时器溢出中断
+  62:	89 b7       	in	r24, 0x39	; 57
+  64:	81 60       	ori	r24, 0x01	; 1
+  66:	89 bf       	out	0x39, r24	; 57
+	
+	// 配置定时器: 1024分频, 普通模式
+	TCCR0 = (1 << CS02) | (1 << CS00);
+  68:	85 e0       	ldi	r24, 0x05	; 5
+  6a:	83 bf       	out	0x33, r24	; 51
+	
+	sei();                  // 开启全局中断
+  6c:	78 94       	sei
+  6e:	ff cf       	rjmp	.-2      	; 0x6e <main+0x12>
+
+00000070 <_exit>:
+  70:	f8 94       	cli
+
+00000072 <__stop_program>:
+  72:	ff cf       	rjmp	.-2      	; 0x72 <__stop_program>
