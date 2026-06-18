@@ -1,0 +1,29 @@
+# Project: 项目1
+# Makefile created by Dev-C++ 6.7.5
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o
+LINKOBJ  = main.o
+LIBS     = -L"D:/Dev C++/Dev-Cpp/MinGW32/lib" -L"D:/Dev C++/Dev-Cpp/MinGW32/mingw32/lib" -nostdlib -static
+INCS     = -I"d:/dev c++/dev-cpp/mingw32/lib/gcc/mingw32/9.2.0/include" -I"d:/dev c++/dev-cpp/mingw32/include" -I"d:/dev c++/dev-cpp/mingw32/lib/gcc/mingw32/9.2.0/include-fixed"
+CXXINCS  = -I"d:/dev c++/dev-cpp/mingw32/lib/gcc/mingw32/9.2.0/include/c++" -I"d:/dev c++/dev-cpp/mingw32/lib/gcc/mingw32/9.2.0/include/c++/mingw32" -I"d:/dev c++/dev-cpp/mingw32/lib/gcc/mingw32/9.2.0/include/c++/backward" -I"d:/dev c++/dev-cpp/mingw32/lib/gcc/mingw32/9.2.0/include" -I"d:/dev c++/dev-cpp/mingw32/include" -I"d:/dev c++/dev-cpp/mingw32/lib/gcc/mingw32/9.2.0/include-fixed"
+BIN      = 项目1.exe
+CXXFLAGS = $(CXXINCS) -nostdlib
+ENCODINGS = -finput-charset=utf-8 -fexec-charset=gbk
+CFLAGS   = $(INCS) -nostdlib
+RM       = del /q /f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "$(BIN)" $(LIBS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS) 
