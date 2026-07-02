@@ -1,0 +1,218 @@
+\documentclass[11pt,a4paper,UTF8]{ctexart}
+\usepackage{booktabs}
+% --- 宏包加载 ---
+\usepackage{geometry}       % 页边距设置
+\usepackage{amsmath}        % 数学公式
+\usepackage{amsfonts}       % 数学字体
+\usepackage{booktabs}       % 科技论文三线表
+\usepackage{tabularx}       % 自适应表格
+\usepackage{array}          % 表格列格式增强
+\usepackage{fancyhdr}       % 页眉页脚设置
+\usepackage{hyperref}       % 超链接与PDF书签
+\usepackage{titlesec}       % 标题格式定制
+
+% --- 页面几何参数设置 ---
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+% --- 页眉页脚配置 ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small 中国科学技术大学西区“数字浴室”DCS工程设计报告}
+\fancyfoot[C]{\small 第~\thepage~页}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- 超链接配置 ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    pdftitle={科大西区数字浴室DCS工程设计报告}
+}
+
+% --- 标题样式定制 ---
+\titleformat{\section}{\large\bfseries\color{black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\bfseries\color{black}}{\thesubsection}{1em}{}
+
+% --- 标题及作者信息 ---
+\title{\Huge\bfseries 科大西区“数字浴室”\\计算机集散控制系统(DCS)工程设计报告}
+\author{\textbf{杜晓阳} \quad 学号：PB23051023 \\ \small 中国科学技术大学 自动化系}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    本项目针对中国科学技术大学西区新建“数字浴室”的基建工程要求，设计一套完整的计算机监控系统。考虑到对象属于“大澡堂子”，具有空间大、喷头节点多（预计数百个）、高温高湿、并发使用率高且具有资金结算性质的特点，本设计严格遵循《计算机控制基础》中关于集散控制系统（DCS）与现场总线系统（FCS）的设计原则。系统采用“管理级-控制级-现场级”三层网络架构，实现主管道蒸汽与水温、水压的恒定闭环控制，以及底层数百个淋浴节点的精确双模式（计时/计流量）计量与一卡通扣费。
+\end{abstract}
+
+\clearpage
+
+\section{第一章 系统需求分析与总体架构设计}
+
+\subsection{1.1 被控对象与环境特性分析}
+在进行计算机控制系统设计前，必须明确被控对象的物理特性。科大西区大澡堂具有以下显著特点：
+\begin{enumerate}
+    \item \textbf{纯滞后与大惯性}：动力锅炉输送来的蒸汽与冷水在混合管中进行热交换，这一热工过程具有明显的纯滞后时间和较大的热惯性。
+    \item \textbf{强耦合与非线性}：冷水管道的压力波动、蒸汽压力的变化、大澡堂内部并发洗浴人数的剧烈变动（如晚上9点下课后的洗浴高峰），会导致系统压力与温度产生强耦合干扰。
+    \item \textbf{恶劣的工业现场环境}：澡堂内部水雾弥漫，相对湿度长期接近 100\%，局部温度高，对现场电子设备的防水防潮（IP防护等级）和电气绝缘提出了极高要求。
+\end{enumerate}
+
+\subsection{1.2 系统任务拆解}
+根据考题要求，本系统的核心任务可拆解为两大子系统：
+\begin{itemize}
+    \item \textbf{子系统A：制热与主管道恒温恒压系统（过程控制）}
+    \begin{itemize}
+        \item \textbf{检测任务}：实时采集动力蒸汽总管、冷水总管、热水总管的温度、压力和流量。
+        \item \textbf{控制任务}：控制蒸汽调节阀开度以维持供水温度恒定；控制变频加压水泵以维持总管压力恒定。
+    \end{itemize}
+    \item \textbf{子系统B：终端计费与计量系统（数据采集与事务处理）}
+    \begin{itemize}
+        \item \textbf{检测与计量任务}：检测每个独立用水龙头（喷头）的水温和用水总量。
+        \item \textbf{计费任务}：支持基于“一卡通”的计时（按洗浴时间）和计流量（按消耗总水量）两种双轨制扣费模式。
+        \item \textbf{记录任务}：完整记录用水人、用水量、用水时段。
+    \end{itemize}
+\end{itemize}
+
+\subsection{1.3 系统总体网络拓扑架构}
+依据第8章关于“分散控制、集中管理”的DCS核心思想，系统采用三级网络拓扑结构：
+\begin{enumerate}
+    \item \textbf{第一级：信息管理层（上位机监控系统）}：设置在浴室管理办公室，由工业控制计算机（IPC）和数据库服务器组成。通过 TCP/IP 协议接入科大校园网，实现与校园一卡通中心数据库的无缝对接和账单结算。
+    \item \textbf{第二级：过程控制层（主控 PLC）}：设置在设备间/锅炉房。采用高性能工业可编程逻辑控制器（PLC），通过 PROFINET 或工业以太网与上位机通讯，负责极其重要且实时的温压 PID 闭环控制。
+    \item \textbf{第三级：现场设备层（RS-485 现场总线）}：分布在数百个淋浴位。每个位点安装一台防潮型“智能水控机”。考虑到布线成本与通信距离，现场级采用 RS-485 现场总线（Modbus RTU 协议），将几十个水控机挂载在一条总线上，最终接入通讯网关并汇总至上位机。
+\end{enumerate}
+
+
+\section{第二章 硬件系统详细选型与配置}
+硬件选型是系统实施的基础，必须兼顾精度、可靠性与经济性。
+
+\subsection{2.1 上位管理机（工控机 IPC）选型}
+\begin{itemize}
+    \item \textbf{主机选型}：选用研华 IPC-610 工业计算机。该机型采用 4U 上架式机箱，具备正压散热防尘设计和高抗震性能，完全适应浴室管理室可能存在的高湿度环境。
+    \item \textbf{网络配置}：必须配置双千兆独立网卡。\textbf{网卡A}连接科大校园一卡通专网（用于资金结算），\textbf{网卡B}连接底层工业控制专网（用于读取PLC及网关数据），实现业务网与工控网的物理隔离，保障财务数据安全。
+\end{itemize}
+
+\subsection{2.2 控制器与变送器选型 (A/D与D/A接口配置)}
+核心过程控制采用西门子 S7-1500 系列 PLC。为满足检测与控制要求，需配置相应的模拟量输入（AI）和模拟量输出（AO）模块（分辨率要求 12 位或以上）。
+
+\begin{table}[htbp]
+\small
+\centering
+\caption{检测与控制变量仪表选型表}
+\label{tab:instruments}
+\begin{tabular}{lp{4.5cm}lp{5.5cm}}
+\topline
+\textbf{检测/控制变量} & \textbf{仪表/传感器选型与技术参数} & \textbf{信号类型} & \textbf{选型理论依据 (第8章)} \\
+\midline
+主蒸汽流量 & 智能涡街流量计（带温压补偿功能） & 4-20mA (入 AI) & 蒸汽密度随温压变化大，需温压补偿保证热能计量精确。 \\
+冷/热水总管流量 & 电磁流量计 & 4-20mA (入 AI) & 测量导电液体无阻流件，减小压损，量程比宽适应人数突变。 \\
+总管道压力 & 扩散硅式防腐压力变送器 (0-1.6MPa) & 4-20mA (入 AI) & 响应速度快，精度高达 0.25 级，满足恒压反馈要求。 \\
+总管道温度 & 铠装 PT100 铂热电阻 + 温度变送器 & 4-20mA (入 AI) & 0-100\textcelsius~范围内线性好，变送输出防止长距离衰减。 \\
+主蒸汽调节阀 & 气动薄膜调节阀（配智能定位器） & 4-20mA (出 AO) & 动作迅速、推力大，高温高湿环境下具备本质安全特性。 \\
+\bottomline
+\end{tabular}
+\end{table}
+
+\subsection{2.3 现场级设备：终端智能水控机与执行器}
+大澡堂的终端节点是本系统最特殊的环节。每个淋浴位需定制一套微型计算节点。
+\begin{itemize}
+    \item \textbf{主控芯片}：采用低功耗 STM32 单片机。
+    \item \textbf{身份验证}：集成非接触式射频读卡模块（兼容校园一卡通 Mifare 1 或 CPU 卡）。
+    \item \textbf{温度检测}：在水龙头出水管内嵌 \textbf{DS18B20 数字温度传感器}。其直接输出数字信号给单片机，无需 A/D 转换，抗干扰能力强，用于在水控机屏幕上实时显示当前水温。
+    \item \textbf{流量检测}：安装 \textbf{霍尔微型叶轮水流传感器}。水流推动叶轮旋转，切割磁感线产生脉冲信号（如 450 脉冲/升），单片机通过外部中断引脚进行高速计数。
+    \item \textbf{执行阀门}：绝对严禁使用 220V 交流阀门。选用 \textbf{12V DC 直流低压铜体常闭型电磁阀}。常闭型设计保证了在意外断电情况下自动切断水源，防止水资源浪费。
+\end{itemize}
+
+
+\section{第三章 计算机过程控制策略与算法设计}
+根据被控对象的特性，采用《计算机控制基础》中的经典数字控制算法。
+
+\subsection{3.1 供水恒压控制 (单回路数字 PID 控制)}
+为了保证大量喷头同时开启时水压不垮，以及少人使用时管道不爆裂，主冷热水泵采用变频控制。通过变送器采集总管实际压力 $y(k)$，与设定压力 $r(k)$ 比较得到误差 $e(k)$。考虑到系统中可能存在的积分饱和现象，采用\textbf{抗积分饱和的数字位置式 PID 算法}。PLC 输出 0-10V 电压信号控制水泵变频器频率（0-50Hz）。其离散化公式为：
+\begin{equation}
+u(k) = K_p e(k) + K_i \sum_{j=0}^k e(j) + K_d [e(k) - e(k-1)]
+\end{equation}
+
+\subsection{3.2 供水恒温控制 (前馈-反馈串级控制)}
+热水温度是澡堂体验的核心。单纯的 PID 反馈控制在面对蒸汽管网压力波动时调节严重滞后。因此，设计\textbf{前馈-反馈计算机串级控制系统}：
+\begin{itemize}
+    \item \textbf{主控回路（反馈）}：以混合热水出口温度为主被控量。
+    \item \textbf{副控回路（前馈）}：将动力锅炉送来的蒸汽流量/压力作为前馈引入信号。
+\end{itemize}
+当蒸汽压力发生剧烈波动时，前馈控制能立即动作改变调节阀开度，将干扰克服在副回路中。结合阀门的机械特性，这里采用\textbf{数字增量式 PID 算法}，它只输出阀门的动作增量，避免了计算错误导致阀门全开全关的危险：
+\begin{equation}
+\Delta u(k) = K_p [e(k) - e(k-1)] + K_i e(k) + K_d [e(k) - 2e(k-1) + e(k-2)]
+\end{equation}
+在系统数字 PID 调节中，采样周期的选取至关重要。结合主管道阀门机械动作的物理响应特性及热工迟滞，本系统的控制采样周期设定为 $T=0.5\text{s}$，既能保证系统响应的实时捕获，又能避免过高的计算开销引起执行机构高频抖动。
+
+\subsection{3.3 终端计费逻辑与计量算法设计}
+水控终端单片机内部需运行两套计费逻辑，通过上位机统一下发参数进行切换。
+\begin{itemize}
+    \item \textbf{模式一：按用水总时间计算（基于定时器）}：用户刷卡验证通过后，单片机驱动继电器打开电磁阀。同时启动内部硬件定时器（Timer）。假设费率为 $R_t$（元/分钟）。系统每产生 1 秒钟的定时中断，累计变量加 1。当用户拔卡时，单片机触发外部中断，立刻关闭电磁阀，停止定时器，计算总时间并乘以 $R_t$ 得出扣除金额，回写至一卡通芯片，并通过 RS-485 总线上传日志。
+    \item \textbf{模式二：按消耗总水量计算（基于脉冲中断计流量）}：用户刷卡开阀出水。霍尔水流传感器输出 PWM 脉冲序列。单片机开启外部中断（EXTI）捕获脉冲上升沿。假设流量计仪表常数为 $K$（即每流过 1 升水产生 $K$ 个脉冲），当前累计脉冲数为 $N$，单价为 $R_v$（元/升）。则消耗总水量及费用计算如下：
+    \begin{equation}
+    V = \frac{N}{K} \text{（升）} \quad , \quad \text{Total Cost} = V \times R_v
+    \end{equation}
+    此模式下，单片机内部采用定时轮询机制，每当脉冲累计折算达到最小计费单位（如 0.01 元）时，即从卡内预扣款中扣除，拔卡时进行多退少补的最终结算。
+\end{itemize}
+
+
+\section{第四章 计算机软件系统与数据库设计}
+
+\subsection{4.1 上位机监控组态软件 (HMI)}
+选用“组态王”或 WinCC 作为上位机监控软件。开发者需绘制大澡堂工艺流程图，包括锅炉、管道、阀门、水泵及各个淋浴分区的动画画面。
+\begin{itemize}
+    \item \textbf{数据动态刷新}：通过 OPC 驱动程序读取底层 PLC 的温压流数据，实时在画面上以数字和曲线形式展示。
+    \item \textbf{报警机制}：设定温度超限（如高于 55\textcelsius~防烫伤报警）、压力过低、通信中断等声光报警逻辑，并将报警记录存入 SQL 数据库。
+\end{itemize}
+
+\subsection{4.2 一卡通计费数据库系统设计 (SQL Server)}
+工控机后台运行 Microsoft SQL Server 数据库，负责处理底层网关汇聚上来的海量终端并发数据，并与科大一卡通中心进行 TCP/IP Socket 通信对账。设计核心业务流水表 \texttt{tb\_Shower\_Records}（洗浴流水表），其字段结构定义如表~\ref{tab:database}~所示：
+
+\begin{table}[htbp]
+\small
+\centering
+\caption{洗浴流水表 (tb\_Shower\_Records) 结构设计}
+\label{tab:database}
+\begin{tabular}{lll}
+\topline
+\textbf{字段名称} & \textbf{数据类型} & \textbf{含义说明} \\
+\midline
+\texttt{RecordID} & BIGINT (主键) & 唯一流水号 \\
+\texttt{TerminalNode} & VARCHAR(50) & 水龙头物理编号 (如 WestBath-ZoneA-045) \\
+\texttt{UserID} & VARCHAR(20) & 用水人一卡通号/学号 (如 PB23051023) \\
+\texttt{StartTime} & DATETIME & 用水开始时间段 \\
+\texttt{EndTime} & DATETIME & 用水结束时间段 \\
+\texttt{TotalVolume} & FLOAT & 用水量（单位：升） \\
+\texttt{AvgTemp} & FLOAT & 洗浴期间的平均水温 \\
+\texttt{TotalCost} & MONEY & 实际扣款金额 \\
+\bottomline
+\end{tabular}
+\end{table}
+
+
+\section{第五章 现场抗干扰与系统可靠性设计 (重点工程考量)}
+《计算机控制基础》特别强调，没有良好的抗干扰设计，系统便无法在恶劣的工业现场长期稳定运行。针对“大澡堂子”这种极端环境，必须采取以下综合措施：
+
+\subsection{5.1 空间与环境抗干扰（IP防护与防潮绝缘）}
+\begin{enumerate}
+    \item \textbf{彻底的强弱电物理隔离}：现场淋浴区严禁引入 220V 交流市电。所有终端水控机均由安装在干燥配电房内的大功率集中式直流开关电源提供 12V/24V 直流供电。
+    \item \textbf{最高级别灌封}：终端水控机外壳必须达到 \textbf{IP68 防护等级}。内部单片机主板、读卡线圈、液晶屏排线必须进行真空环氧树脂“灌封”处理，隔绝水汽凝结导致的电路板微短路和电化学腐蚀。
+\end{enumerate}
+
+\subsection{5.2 供电与信号传输抗干扰}
+\begin{enumerate}
+    \item \textbf{光电隔离保护}：从 PLC 输出给变频器和执行阀门的模拟量信号线，必须经过工业级模拟量信号隔离器（光电隔离或磁隔离），防止水泵电机启停时产生的巨大浪涌电流反窜烧毁 PLC 的 D/A 模块。
+    \item \textbf{总线通信屏蔽}：现场多达数百个节点的 RS-485 通信总线，必须采用带有铝箔和编织网双层屏蔽的工业级 RS-485 专用双绞线。走线时必须穿镀锌钢管敷设，且屏蔽层必须在控制室的网关端进行\textbf{单点可靠接地}（接入大楼弱电等电位接地网），严禁两端接地形成地环路电流。
+\end{enumerate}
+
+\subsection{5.3 软件与系统容错设计 (Fail-Safe)}
+\begin{enumerate}
+    \item \textbf{终端脱机生存能力}：考虑到洗浴高峰期数百个节点同时结束洗浴，瞬时高并发通信可能导致总线拥塞。水控单片机内部配置大容量 Flash 存储器。当检测到网络断开时，转为“脱机工作模式”，就地完成扣费，暂存流水记录。待网络恢复后，再由上位机自动发起断点续传轮询，确保数据“零丢失”。
+    \item \textbf{看门狗复位机制}：单片机程序内部开启硬件看门狗定时器（Watchdog Timer）。当由于外界强电磁干扰导致程序跑飞或死机时，系统能在几百毫秒内自动硬复位并恢复最后的工作状态（如默认保持阀门关闭状态）。
+\end{enumerate}
+
+
+\section{结语}
+本设计方案严格依据《计算机控制基础》计算机控制系统的工程实现的理论指导，针对科大西区“大澡堂子”的特定业务场景与恶劣物理环境，构建了一套深度融合了 DCS 过程控制与 FCS 现场数据采集的综合数字系统。通过串级 PID 控制算法保障了水温水压的舒适与稳定，通过智能单片机终端与双模式计费算法实现了精细化管理与一卡通互联，并通过严密的 IP 防护与电气隔离设计确保了庞大系统的绝对安全与高可用性。该方案论证充分，技术路线成熟，具备极高的工程落地可行性。
+
+\end{document}
